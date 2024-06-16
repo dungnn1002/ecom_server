@@ -16,8 +16,8 @@ export declare class AuthService {
             code: string;
         };
         user: {
-            email: string;
             id: number;
+            email: string;
             createdAt: Date;
         };
     }>;

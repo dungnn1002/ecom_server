@@ -13,8 +13,8 @@ export declare class UserController {
                 code: string;
             };
             user: {
-                email: string;
                 id: number;
+                email: string;
                 createdAt: Date;
             };
         };

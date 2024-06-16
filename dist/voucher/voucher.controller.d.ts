@@ -53,4 +53,14 @@ export declare class voucherController {
         message: MessageDto;
         codeVoucher: Voucher;
     }>;
+    addVoucherUsed(data: {
+        userId: number;
+        voucherId: number;
+    }): Promise<{
+        id: number;
+        userId: number;
+        voucherId: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
 }

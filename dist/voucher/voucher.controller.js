@@ -35,6 +35,9 @@ let voucherController = class voucherController {
     async addCodeVoucher(data) {
         return await this.voucherService.addCodeVoucher(data);
     }
+    async addVoucherUsed(data) {
+        return await this.voucherService.addVoucherUsed(data);
+    }
 };
 exports.voucherController = voucherController;
 __decorate([
@@ -69,6 +72,14 @@ __decorate([
     __metadata("design:paramtypes", [addCodeVoucher_dto_1.addCodeVoucherDTO]),
     __metadata("design:returntype", Promise)
 ], voucherController.prototype, "addCodeVoucher", null);
+__decorate([
+    (0, common_1.UseGuards)(gauad_1.JwtGuard),
+    (0, common_1.Post)('/add-voucherUsed'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], voucherController.prototype, "addVoucherUsed", null);
 exports.voucherController = voucherController = __decorate([
     (0, common_1.Controller)('voucher'),
     __metadata("design:paramtypes", [voucher_service_1.voucherService])

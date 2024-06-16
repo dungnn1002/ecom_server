@@ -34,4 +34,9 @@ export class voucherController {
   ): Promise<{ message: MessageDto; codeVoucher: Voucher }> {
     return await this.voucherService.addCodeVoucher(data);
   }
+  @UseGuards(JwtGuard)
+  @Post('/add-voucherUsed')
+  async addVoucherUsed(@Body() data: { userId: number; voucherId: number }) {
+    return await this.voucherService.addVoucherUsed(data);
+  }
 }

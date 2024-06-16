@@ -242,7 +242,6 @@ model VoucherUsed {
   user      User?     @relation(fields: [userId], references: [id])
   voucherId Int?
   voucher   Voucher?  @relation(fields: [voucherId], references: [id])
-  statusId  Int?
   createdAt DateTime? @default(now()) @db.Timestamptz(3)
   updatedAt DateTime? @updatedAt @db.Timestamptz(3)
 }

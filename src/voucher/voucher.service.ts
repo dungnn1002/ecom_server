@@ -76,4 +76,14 @@ export class voucherService {
 
     return { message: httpErrors.VOUCHER_ADD_CODE_SUCCESS, codeVoucher };
   }
+
+  async addVoucherUsed(data: { userId: number; voucherId: number }) {
+    const voucherUsed = await this.prismaService.voucherUsed.create({
+      data: {
+        userId: +data.userId,
+        voucherId: +data.voucherId,
+      },
+    });
+    return voucherUsed;
+  }
 }
