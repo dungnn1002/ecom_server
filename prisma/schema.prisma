@@ -1,0 +1,345 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int           @id @default(autoincrement())
+  email           String        @unique
+  password        String
+  firstName       String
+  lastName        String
+  address         String?
+  gender          Gender?
+  phoneNumber     String?       @unique
+  image           String?
+  dob             DateTime?     @db.Timestamptz(3)
+  isActiveEmail   Boolean?
+  roleId          Role          @default(USER)
+  status          Status?       @default(ACTIVE)
+  userToken       String?
+  createdAt       DateTime?     @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime?     @updatedAt @db.Timestamptz(3)
+  addressUser     AddressUser[]
+  blog            Blog[]
+  Comment         Comment[]
+  Message         Message[]
+  ShopCart        ShopCart[]
+  roomMessagesOne RoomMessage[] @relation("UserOne")
+  roomMessagesTwo RoomMessage[] @relation("UserTwo")
+  Receipt         Receipt[]
+  VoucherUsed     VoucherUsed[]
+}
+
+model AddressUser {
+  id           Int            @id @default(autoincrement()) @map("_id")
+  userId       Int
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shipName     String?
+  shipAdress   String?
+  shipPhone    String?
+  shipEmail    String?
+  createdAt    DateTime?      @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime?      @updatedAt @db.Timestamptz(3)
+  OrderProduct OrderProduct[]
+}
+
+model Banner {
+  id          Int       @id @default(autoincrement())
+  description String?
+  name        String?
+  status      Status?
+  image       String?
+  createdAt   DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
+}
+
+model Blog {
+  id              Int       @id @default(autoincrement())
+  title           String?
+  subject         Subject?
+  status          Status?
+  image           String?
+  contentMarkdown String?
+  contentHTML     String?
+  userId          Int?
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  view            Int?
+  createdAt       DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime? @updatedAt @db.Timestamptz(3)
+  Comment         Comment[]
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  content   String?
+  image     String?
+  parentId  Int?
+  productId Int?
+  product   Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    Int?
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blogId    Int?
+  blog      Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  star      Int?
+  createdAt DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
+}
+
+model Message {
+  id        Int          @id @default(autoincrement())
+  text      String?
+  userId    Int?
+  user      User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roomId    Int?
+  room      RoomMessage? @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  unRead    Boolean?
+  createdAt DateTime?    @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime?    @updatedAt @db.Timestamptz(3)
+}
+
+model OrderDetaill {
+  id        Int           @id @default(autoincrement())
+  orderId   Int?
+  order     OrderProduct? @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int?
+  product   Product?      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int?
+  realPrice Int?
+  createdAt DateTime?     @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime?     @updatedAt @db.Timestamptz(3)
+}
+
+model OrderProduct {
+  id              Int            @id @default(autoincrement())
+  addressUserId   Int?
+  addressUser     AddressUser?   @relation(fields: [addressUserId], references: [id], onDelete: Cascade)
+  status          Status?
+  typeShipId      Int?
+  typeShip        TypeShip?      @relation(fields: [typeShipId], references: [id], onDelete: Cascade)
+  voucherId       Int?
+  voucher         Voucher?       @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+  note            String?
+  isPaymentOnline Int?
+  shipperId       Int?
+  image           String?
+  createdAt       DateTime?      @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime?      @updatedAt @db.Timestamptz(3)
+  OrderDetaill    OrderDetaill[]
+}
+
+model ProductSize {
+  id        Int        @id @default(autoincrement())
+  productId Int?
+  product   Product?   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size      Size?
+  quantity  Int?
+  createdAt DateTime?  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime?  @updatedAt @db.Timestamptz(3)
+  ShopCart  ShopCart[]
+}
+
+model ProductImage {
+  id        Int       @id @default(autoincrement())
+  productId Int?
+  product   Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  image_url String?
+  createdAt DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
+}
+
+model Product {
+  id              Int            @id @default(autoincrement())
+  name            String?
+  contentHTML     String?
+  contentMarkdown String?
+  status          Status?
+  categoryId      Int?
+  category        Category?      @relation(fields: [categoryId], references: [id])
+  view            Int?
+  material        String?
+  brandId         Int?
+  originalPrice   Int?
+  discountPrice   Int?
+  brand           Brand?         @relation(fields: [brandId], references: [id])
+  Comment         Comment[]
+  OrderDetaill    OrderDetaill[]
+  ProductSize     ProductSize[]
+  ProductImage    ProductImage[]
+}
+
+model RoomMessage {
+  id        Int       @id @default(autoincrement())
+  userOne   User?     @relation("UserOne", fields: [userOneId], references: [id])
+  userTwo   User?     @relation("UserTwo", fields: [userTwoId], references: [id])
+  createdAt DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
+  messages  Message[]
+  userOneId Int?
+  userTwoId Int?
+}
+
+model ShopCart {
+  id            Int          @id @default(autoincrement())
+  userId        Int?
+  user          User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productSizeId Int?
+  productSize   ProductSize? @relation(fields: [productSizeId], references: [id], onDelete: Cascade)
+  quantity      Int?
+  createdAt     DateTime?    @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime?    @updatedAt @db.Timestamptz(3)
+
+  @@unique([userId, productSizeId])
+}
+
+model TypeShip {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  price        Int?
+  createdAt    DateTime?      @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime?      @updatedAt @db.Timestamptz(3)
+  OrderProduct OrderProduct[]
+}
+
+model TypeVoucher {
+  id          Int       @id @default(autoincrement())
+  typeVoucher Discount?
+  value       Int?
+  maxValue    Int?
+  minValue    Int?
+  createdAt   DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
+  Voucher     Voucher[]
+}
+
+model Voucher {
+  id            Int            @id @default(autoincrement())
+  fromDate      DateTime?      @db.Timestamptz(3)
+  toDate        DateTime?      @db.Timestamptz(3)
+  typeVoucherId Int?
+  typeVoucher   TypeVoucher?   @relation(fields: [typeVoucherId], references: [id])
+  amount        Int?
+  codeVoucher   String?
+  createdAt     DateTime?      @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime?      @updatedAt @db.Timestamptz(3)
+  OrderProduct  OrderProduct[]
+  VoucherUsed   VoucherUsed[]
+}
+
+model VoucherUsed {
+  id        Int       @id @default(autoincrement())
+  userId    Int?
+  user      User?     @relation(fields: [userId], references: [id])
+  voucherId Int?
+  voucher   Voucher?  @relation(fields: [voucherId], references: [id])
+  statusId  Int?
+  createdAt DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
+}
+
+model Supplier {
+  id          Int       @id @default(autoincrement())
+  name        String?
+  address     String?
+  phoneNumber String?
+  email       String?
+  createdAt   DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
+}
+
+model Receipt {
+  id         Int       @id @default(autoincrement())
+  userId     Int?
+  user       User?     @relation(fields: [userId], references: [id])
+  supplierId Int?
+  createdAt  DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt  DateTime? @updatedAt @db.Timestamptz(3)
+}
+
+model ReceiptDetail {
+  id                  Int       @id @default(autoincrement())
+  receiptId           Int?
+  productDetailSizeId Int?
+  quantity            Int?
+  price               Int?
+  createdAt           DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt           DateTime? @updatedAt @db.Timestamptz(3)
+}
+
+enum Role {
+  ADMIN
+  USER
+  SHIPPER
+  SALER
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum Gender {
+  NAM
+  NU
+  KHAC
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  brandId   Int?
+  brand     Brand?    @relation(fields: [brandId], references: [id])
+  createdAt DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
+  Product   Product[]
+
+  @@unique([name, brandId])
+}
+
+model Brand {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  createdAt DateTime?  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime?  @updatedAt @db.Timestamptz(3)
+  Product   Product[]
+  Category  Category[]
+}
+
+enum Discount {
+  PHAN_TRAM
+  VND
+}
+
+enum Subject {
+  CHAM_SOC_SUC_KHOE
+  CONG_NGHE_MOI
+  THOI_TRANG_TUOI_TEEN
+}
+
+// create table Size
+
+enum Size {
+  S
+  M
+  L
+  XL
+  XXL
+}
+
+enum StatusOrder {
+  CHO_XAC_NHAN
+  CHO_LAY_HANG
+  DANG_GIAO_HANG
+  DA_GIAO_HANG
+  HUY_DON
+}
