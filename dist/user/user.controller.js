@@ -32,6 +32,9 @@ let UserController = class UserController {
     async getShopCart(userId) {
         return await this.userServices.getShopCart(userId);
     }
+    async getShipAddress(userId) {
+        return await this.userServices.getShipAddress(userId);
+    }
     async editUser(id, data) {
         return { data: await this.userServices.editUser(id, data) };
     }
@@ -65,6 +68,14 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getShopCart", null);
+__decorate([
+    (0, common_1.UseGuards)(gauad_1.JwtGuard),
+    (0, common_1.Get)('ship-address'),
+    __param(0, (0, decorators_1.GetUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getShipAddress", null);
 __decorate([
     (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Post)('/edit-user/:id'),

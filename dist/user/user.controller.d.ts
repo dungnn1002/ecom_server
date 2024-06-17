@@ -1,7 +1,7 @@
 import { UserServices } from './user.services';
 import { PaginationDto, ResponseDto } from 'src/share/dto';
 import { addUserDTO, editUserDTO } from './dto';
-import { User } from '@prisma/client';
+import { User, AddressUser } from '@prisma/client';
 export declare class UserController {
     private readonly userServices;
     constructor(userServices: UserServices);
@@ -13,8 +13,8 @@ export declare class UserController {
                 code: string;
             };
             user: {
-                id: number;
                 email: string;
+                id: number;
                 createdAt: Date;
             };
         };
@@ -42,6 +42,7 @@ export declare class UserController {
             updatedAt: Date;
         }[];
     }>;
+    getShipAddress(userId: number): Promise<AddressUser[]>;
     editUser(id: number, data: editUserDTO): Promise<{
         data: {
             message: string;

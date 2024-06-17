@@ -1,5 +1,5 @@
 import { PrismaService } from '../prisma/prisma.service';
-import { User } from '@prisma/client';
+import { AddressUser, User } from '@prisma/client';
 import { MessageDto, ResponseDto } from 'src/share/dto';
 import { addUserDTO, editUserDTO } from './dto';
 export declare class UserServices {
@@ -18,8 +18,8 @@ export declare class UserServices {
             code: string;
         };
         user: {
-            id: number;
             email: string;
+            id: number;
             createdAt: Date;
         };
     }>;
@@ -54,4 +54,5 @@ export declare class UserServices {
             updatedAt: Date;
         }[];
     }>;
+    getShipAddress(userId: number): Promise<AddressUser[]>;
 }

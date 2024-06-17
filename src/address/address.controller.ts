@@ -19,4 +19,9 @@ export class AddressController {
   async addAddress(@Body() data: addAddressDTO) {
     return await this.addressService.addAddress(data);
   }
+  @UseGuards(JwtGuard)
+  @Delete('/delete/:id')
+  async deleteAddress(@Param('id') id: number) {
+    return await this.addressService.deleteAddress(id);
+  }
 }

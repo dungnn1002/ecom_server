@@ -7,7 +7,17 @@ export declare class AddressController {
         id: number;
         userId: number;
         shipName: string;
-        shipAdress: string;
+        shipAddress: string;
+        shipPhone: string;
+        shipEmail: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    deleteAddress(id: number): Promise<{
+        id: number;
+        userId: number;
+        shipName: string;
+        shipAddress: string;
         shipPhone: string;
         shipEmail: string;
         createdAt: Date;

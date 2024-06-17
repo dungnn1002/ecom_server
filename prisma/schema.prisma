@@ -46,7 +46,7 @@ model AddressUser {
   userId       Int
   user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   shipName     String?
-  shipAdress   String?
+  shipAddress  String?
   shipPhone    String?
   shipEmail    String?
   createdAt    DateTime?      @default(now()) @db.Timestamptz(3)

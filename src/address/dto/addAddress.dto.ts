@@ -18,5 +18,5 @@ export class addAddressDTO {
 
   @IsString()
   @IsNotEmpty()
-  shipAdress: string;
+  shipAddress: string;
 }

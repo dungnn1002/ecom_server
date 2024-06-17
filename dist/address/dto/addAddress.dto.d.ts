@@ -3,5 +3,5 @@ export declare class addAddressDTO {
     shipName: string;
     shipEmail: string;
     shipPhone: string;
-    shipAdress: string;
+    shipAddress: string;
 }

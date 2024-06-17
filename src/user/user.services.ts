@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Gender, Role, User } from '@prisma/client';
+import { AddressUser, Gender, Role, User } from '@prisma/client';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { httpErrors } from '../share/exception';
 import { MessageDto, ResponseDto } from 'src/share/dto';
@@ -175,5 +175,12 @@ export class UserServices {
         };
       }),
     };
+  }
+  async getShipAddress(userId: number): Promise<AddressUser[]> {
+    return await this.prismaService.addressUser.findMany({
+      where: {
+        userId: +userId,
+      },
+    });
   }
 }

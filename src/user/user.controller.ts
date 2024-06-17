@@ -12,7 +12,7 @@ import { JwtGuard } from 'src/auth/gauad';
 import { UserServices } from './user.services';
 import { PaginationDto, ResponseDto } from 'src/share/dto';
 import { addUserDTO, editUserDTO } from './dto';
-import { User } from '@prisma/client';
+import { User, AddressUser } from '@prisma/client';
 import { GetUser } from 'src/share/decorators';
 @Controller('users')
 export class UserController {
@@ -36,6 +36,12 @@ export class UserController {
   @Get('shopcart')
   async getShopCart(@GetUser() userId: number) {
     return await this.userServices.getShopCart(userId);
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('ship-address')
+  async getShipAddress(@GetUser() userId: number): Promise<AddressUser[]> {
+    return await this.userServices.getShipAddress(userId);
   }
 
   @UseGuards(JwtGuard)

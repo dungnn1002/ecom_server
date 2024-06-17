@@ -8,10 +8,17 @@ export class AddressService {
     return await this.prismaService.addressUser.create({
       data: {
         userId: +data.userId,
-        shipAdress: data.shipAdress,
+        shipAddress: data.shipAddress,
         shipEmail: data.shipEmail,
         shipName: data.shipName,
         shipPhone: data.shipPhone,
+      },
+    });
+  }
+  async deleteAddress(id: number) {
+    return await this.prismaService.addressUser.delete({
+      where: {
+        id: +id,
       },
     });
   }
