@@ -121,21 +121,18 @@ model OrderDetaill {
 }
 
 model OrderProduct {
-  id              Int            @id @default(autoincrement())
-  addressUserId   Int?
-  addressUser     AddressUser?   @relation(fields: [addressUserId], references: [id], onDelete: Cascade)
-  status          Status?
-  typeShipId      Int?
-  typeShip        TypeShip?      @relation(fields: [typeShipId], references: [id], onDelete: Cascade)
-  voucherId       Int?
-  voucher         Voucher?       @relation(fields: [voucherId], references: [id], onDelete: Cascade)
-  note            String?
-  isPaymentOnline Int?
-  shipperId       Int?
-  image           String?
-  createdAt       DateTime?      @default(now()) @db.Timestamptz(3)
-  updatedAt       DateTime?      @updatedAt @db.Timestamptz(3)
-  OrderDetaill    OrderDetaill[]
+  id            Int            @id @default(autoincrement())
+  addressUserId Int?
+  addressUser   AddressUser?   @relation(fields: [addressUserId], references: [id], onDelete: Cascade)
+  status        Status?
+  typeShipId    Int?
+  typeShip      TypeShip?      @relation(fields: [typeShipId], references: [id], onDelete: Cascade)
+  voucherId     Int?
+  voucher       Voucher?       @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+  image         String?
+  createdAt     DateTime?      @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime?      @updatedAt @db.Timestamptz(3)
+  OrderDetaill  OrderDetaill[]
 }
 
 model ProductSize {

@@ -10,6 +10,7 @@ import { VoucherModule } from './voucher/voucher.module';
 import { UploadModule } from './upload/upload.module';
 import { ProductModule } from './product/product.module';
 import { ShopcartModule } from './shopcart/shopcart.module';
+import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ShopcartModule } from './shopcart/shopcart.module';
     UploadModule,
     ProductModule,
     ShopcartModule,
+    AddressModule,
   ],
 })
 export class AppModule {}

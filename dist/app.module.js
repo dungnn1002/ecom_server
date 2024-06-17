@@ -19,6 +19,7 @@ const voucher_module_1 = require("./voucher/voucher.module");
 const upload_module_1 = require("./upload/upload.module");
 const product_module_1 = require("./product/product.module");
 const shopcart_module_1 = require("./shopcart/shopcart.module");
+const address_module_1 = require("./address/address.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -38,6 +39,7 @@ exports.AppModule = AppModule = __decorate([
             upload_module_1.UploadModule,
             product_module_1.ProductModule,
             shopcart_module_1.ShopcartModule,
+            address_module_1.AddressModule,
         ],
     })
 ], AppModule);
