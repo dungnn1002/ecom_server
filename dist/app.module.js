@@ -20,6 +20,7 @@ const upload_module_1 = require("./upload/upload.module");
 const product_module_1 = require("./product/product.module");
 const shopcart_module_1 = require("./shopcart/shopcart.module");
 const address_module_1 = require("./address/address.module");
+const order_module_1 = require("./order/order.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -40,6 +41,7 @@ exports.AppModule = AppModule = __decorate([
             product_module_1.ProductModule,
             shopcart_module_1.ShopcartModule,
             address_module_1.AddressModule,
+            order_module_1.OrderModule,
         ],
     })
 ], AppModule);

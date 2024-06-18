@@ -14,31 +14,28 @@ datasource db {
 }
 
 model User {
-  id              Int           @id @default(autoincrement())
-  email           String        @unique
-  password        String
-  firstName       String
-  lastName        String
-  address         String?
-  gender          Gender?
-  phoneNumber     String?       @unique
-  image           String?
-  dob             DateTime?     @db.Timestamptz(3)
-  isActiveEmail   Boolean?
-  roleId          Role          @default(USER)
-  status          Status?       @default(ACTIVE)
-  userToken       String?
-  createdAt       DateTime?     @default(now()) @db.Timestamptz(3)
-  updatedAt       DateTime?     @updatedAt @db.Timestamptz(3)
-  addressUser     AddressUser[]
-  blog            Blog[]
-  Comment         Comment[]
-  Message         Message[]
-  ShopCart        ShopCart[]
-  roomMessagesOne RoomMessage[] @relation("UserOne")
-  roomMessagesTwo RoomMessage[] @relation("UserTwo")
-  Receipt         Receipt[]
-  VoucherUsed     VoucherUsed[]
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
+  password      String
+  firstName     String
+  lastName      String
+  address       String?
+  gender        Gender?
+  phoneNumber   String?       @unique
+  image         String?
+  dob           DateTime?     @db.Timestamptz(3)
+  isActiveEmail Boolean?
+  roleId        Role          @default(USER)
+  status        Status?       @default(ACTIVE)
+  userToken     String?
+  createdAt     DateTime?     @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime?     @updatedAt @db.Timestamptz(3)
+  addressUser   AddressUser[]
+  blog          Blog[]
+  Comment       Comment[]
+  ShopCart      ShopCart[]
+  Receipt       Receipt[]
+  VoucherUsed   VoucherUsed[]
 }
 
 model AddressUser {
@@ -96,54 +93,45 @@ model Comment {
   updatedAt DateTime? @updatedAt @db.Timestamptz(3)
 }
 
-model Message {
-  id        Int          @id @default(autoincrement())
-  text      String?
-  userId    Int?
-  user      User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  roomId    Int?
-  room      RoomMessage? @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  unRead    Boolean?
-  createdAt DateTime?    @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime?    @updatedAt @db.Timestamptz(3)
-}
-
 model OrderDetaill {
-  id        Int           @id @default(autoincrement())
-  orderId   Int?
-  order     OrderProduct? @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId Int?
-  product   Product?      @relation(fields: [productId], references: [id], onDelete: Cascade)
-  quantity  Int?
-  realPrice Int?
-  createdAt DateTime?     @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime?     @updatedAt @db.Timestamptz(3)
+  id            Int           @id @default(autoincrement())
+  orderId       Int?
+  order         OrderProduct? @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productSizeId Int?
+  productSize   ProductSize?  @relation(fields: [productSizeId], references: [id], onDelete: Cascade)
+  quantity      Int?
+  realPrice     Int?
+  createdAt     DateTime?     @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime?     @updatedAt @db.Timestamptz(3)
+  Product       Product?      @relation(fields: [productId], references: [id])
+  productId     Int?
 }
 
 model OrderProduct {
-  id            Int            @id @default(autoincrement())
-  addressUserId Int?
-  addressUser   AddressUser?   @relation(fields: [addressUserId], references: [id], onDelete: Cascade)
-  status        Status?
-  typeShipId    Int?
-  typeShip      TypeShip?      @relation(fields: [typeShipId], references: [id], onDelete: Cascade)
-  voucherId     Int?
-  voucher       Voucher?       @relation(fields: [voucherId], references: [id], onDelete: Cascade)
-  image         String?
-  createdAt     DateTime?      @default(now()) @db.Timestamptz(3)
-  updatedAt     DateTime?      @updatedAt @db.Timestamptz(3)
-  OrderDetaill  OrderDetaill[]
+  id              Int            @id @default(autoincrement())
+  addressUserId   Int?
+  addressUser     AddressUser?   @relation(fields: [addressUserId], references: [id], onDelete: Cascade)
+  typeShipId      Int?
+  typeShip        TypeShip?      @relation(fields: [typeShipId], references: [id], onDelete: Cascade)
+  isPaymentOnline Boolean?
+  voucherId       Int?
+  voucher         Voucher?       @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+  image           String?
+  createdAt       DateTime?      @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime?      @updatedAt @db.Timestamptz(3)
+  OrderDetaill    OrderDetaill[]
 }
 
 model ProductSize {
-  id        Int        @id @default(autoincrement())
-  productId Int?
-  product   Product?   @relation(fields: [productId], references: [id], onDelete: Cascade)
-  size      Size?
-  quantity  Int?
-  createdAt DateTime?  @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime?  @updatedAt @db.Timestamptz(3)
-  ShopCart  ShopCart[]
+  id           Int            @id @default(autoincrement())
+  productId    Int?
+  product      Product?       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size         Size?
+  quantity     Int?
+  createdAt    DateTime?      @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime?      @updatedAt @db.Timestamptz(3)
+  ShopCart     ShopCart[]
+  OrderDetaill OrderDetaill[]
 }
 
 model ProductImage {
@@ -173,17 +161,6 @@ model Product {
   OrderDetaill    OrderDetaill[]
   ProductSize     ProductSize[]
   ProductImage    ProductImage[]
-}
-
-model RoomMessage {
-  id        Int       @id @default(autoincrement())
-  userOne   User?     @relation("UserOne", fields: [userOneId], references: [id])
-  userTwo   User?     @relation("UserTwo", fields: [userTwoId], references: [id])
-  createdAt DateTime? @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
-  messages  Message[]
-  userOneId Int?
-  userTwoId Int?
 }
 
 model ShopCart {

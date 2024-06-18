@@ -14,12 +14,12 @@ export declare class ProductService {
     findAllProduct(page: number, limit: number): Promise<{
         data: ({
             category: {
-                id: number;
                 name: string;
+                id: number;
             };
             brand: {
-                id: number;
                 name: string;
+                id: number;
             };
             ProductSize: {
                 id: number;

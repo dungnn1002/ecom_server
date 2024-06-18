@@ -16,11 +16,9 @@ export class editProductDTO {
   brandId: number;
 
   @IsString()
-  // @IsNotEmpty()
   contentHTML: string;
 
   @IsString()
-  // @IsNotEmpty()
   contentMarkdown: string;
 
   @IsNotEmpty()
