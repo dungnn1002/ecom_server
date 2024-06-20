@@ -117,7 +117,7 @@ __decorate([
         },
     }))),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, dto_2.editUserDTO, Object]),
+    __metadata("design:paramtypes", [Number, dto_2.editProfileDTO, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "editProfile", null);
 exports.UserController = UserController = __decorate([

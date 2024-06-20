@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { addAddressDTO } from './dto';
+import { addAddressDTO, editAddressDTO } from './dto';
 @Injectable()
 export class AddressService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -19,6 +19,19 @@ export class AddressService {
     return await this.prismaService.addressUser.delete({
       where: {
         id: +id,
+      },
+    });
+  }
+  async editAddress(data: editAddressDTO) {
+    return await this.prismaService.addressUser.update({
+      where: {
+        id: +data.id,
+      },
+      data: {
+        shipAddress: data.shipAddress,
+        shipEmail: data.shipEmail,
+        shipName: data.shipName,
+        shipPhone: data.shipPhone,
       },
     });
   }

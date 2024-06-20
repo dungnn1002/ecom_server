@@ -1,5 +1,5 @@
 import { PrismaService } from 'src/prisma/prisma.service';
-import { addAddressDTO } from './dto';
+import { addAddressDTO, editAddressDTO } from './dto';
 export declare class AddressService {
     private readonly prismaService;
     constructor(prismaService: PrismaService);
@@ -14,6 +14,16 @@ export declare class AddressService {
         updatedAt: Date;
     }>;
     deleteAddress(id: number): Promise<{
+        id: number;
+        userId: number;
+        shipName: string;
+        shipAddress: string;
+        shipPhone: string;
+        shipEmail: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    editAddress(data: editAddressDTO): Promise<{
         id: number;
         userId: number;
         shipName: string;

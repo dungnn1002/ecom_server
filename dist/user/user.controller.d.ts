@@ -1,7 +1,7 @@
 /// <reference types="multer" />
 import { UserServices } from './user.services';
 import { PaginationDto, ResponseDto } from 'src/share/dto';
-import { addUserDTO, editUserDTO } from './dto';
+import { addUserDTO, editUserDTO, editProfileDTO } from './dto';
 import { User, AddressUser } from '@prisma/client';
 export declare class UserController {
     private readonly userServices;
@@ -56,7 +56,7 @@ export declare class UserController {
             code: string;
         };
     }>;
-    editProfile(userId: number, data: editUserDTO, image: Express.Multer.File): Promise<{
+    editProfile(userId: number, data: editProfileDTO, image: Express.Multer.File): Promise<{
         message: string;
         code: string;
     }>;

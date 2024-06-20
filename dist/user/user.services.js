@@ -201,7 +201,6 @@ let UserServices = class UserServices {
                     firstName: data.firstName,
                     lastName: data.lastName,
                     phoneNumber: data.phoneNumber,
-                    roleId: data.roleId,
                     address: data.address,
                     gender: data.gender,
                     dob: data.dateOfBirth ? new Date(data.dateOfBirth) : null,

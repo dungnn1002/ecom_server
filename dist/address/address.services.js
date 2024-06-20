@@ -34,6 +34,19 @@ let AddressService = class AddressService {
             },
         });
     }
+    async editAddress(data) {
+        return await this.prismaService.addressUser.update({
+            where: {
+                id: +data.id,
+            },
+            data: {
+                shipAddress: data.shipAddress,
+                shipEmail: data.shipEmail,
+                shipName: data.shipName,
+                shipPhone: data.shipPhone,
+            },
+        });
+    }
 };
 exports.AddressService = AddressService;
 exports.AddressService = AddressService = __decorate([

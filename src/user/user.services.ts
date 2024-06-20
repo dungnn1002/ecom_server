@@ -4,7 +4,7 @@ import { AddressUser, Gender, Role, User } from '@prisma/client';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { httpErrors } from '../share/exception';
 import { MessageDto, ResponseDto } from 'src/share/dto';
-import { addUserDTO, editUserDTO } from './dto';
+import { addUserDTO, editProfileDTO, editUserDTO } from './dto';
 import * as argon from 'argon2';
 import { messageSuccess } from 'src/share/message';
 import { UploadService } from 'src/upload/upload.service';
@@ -191,7 +191,7 @@ export class UserServices {
   }
   async editProfile(
     userId: number,
-    data: editUserDTO,
+    data: editProfileDTO,
     image: Express.Multer.File,
   ) {
     try {
@@ -217,7 +217,6 @@ export class UserServices {
           firstName: data.firstName,
           lastName: data.lastName,
           phoneNumber: data.phoneNumber,
-          roleId: data.roleId as Role,
           address: data.address,
           gender: data.gender as Gender,
           dob: data.dateOfBirth ? new Date(data.dateOfBirth) : null,

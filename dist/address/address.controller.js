@@ -27,6 +27,9 @@ let AddressController = class AddressController {
     async deleteAddress(id) {
         return await this.addressService.deleteAddress(id);
     }
+    async editAddress(data) {
+        return await this.addressService.editAddress(data);
+    }
 };
 exports.AddressController = AddressController;
 __decorate([
@@ -45,6 +48,14 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], AddressController.prototype, "deleteAddress", null);
+__decorate([
+    (0, common_1.UseGuards)(gauad_1.JwtGuard),
+    (0, common_1.Post)('/edit'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [dto_1.editAddressDTO]),
+    __metadata("design:returntype", Promise)
+], AddressController.prototype, "editAddress", null);
 exports.AddressController = AddressController = __decorate([
     (0, common_1.Controller)('address'),
     __metadata("design:paramtypes", [address_services_1.AddressService])

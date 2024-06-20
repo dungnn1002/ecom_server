@@ -15,7 +15,7 @@ import {
 import { JwtGuard } from 'src/auth/gauad';
 import { UserServices } from './user.services';
 import { PaginationDto, ResponseDto } from 'src/share/dto';
-import { addUserDTO, editUserDTO } from './dto';
+import { addUserDTO, editUserDTO, editProfileDTO } from './dto';
 import { User, AddressUser } from '@prisma/client';
 import { GetUser } from 'src/share/decorators';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -66,7 +66,7 @@ export class UserController {
   @UseInterceptors(FilesInterceptor('image'))
   async editProfile(
     @GetUser() userId: number,
-    @Body() data: editUserDTO,
+    @Body() data: editProfileDTO,
     @UploadedFiles(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({
