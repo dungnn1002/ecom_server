@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AddressUser, Gender, Role, User } from '@prisma/client';
 import { HttpException, HttpStatus } from '@nestjs/common';
@@ -7,9 +7,15 @@ import { MessageDto, ResponseDto } from 'src/share/dto';
 import { addUserDTO, editUserDTO } from './dto';
 import * as argon from 'argon2';
 import { messageSuccess } from 'src/share/message';
+import { UploadService } from 'src/upload/upload.service';
+import { getKeyByFilename } from 'src/utils/get-key-by-filename.util';
 @Injectable()
 export class UserServices {
-  constructor(private readonly prismaService: PrismaService) {}
+  private readonly logger = new Logger(UploadService.name);
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly uploadService: UploadService,
+  ) {}
 
   async findById(userId: number): Promise<User | null> {
     return this.prismaService.user.findUnique({
@@ -182,5 +188,71 @@ export class UserServices {
         userId: +userId,
       },
     });
+  }
+  async editProfile(
+    userId: number,
+    data: editUserDTO,
+    image: Express.Multer.File,
+  ) {
+    try {
+      // Kiểm tra userId có hợp lệ không
+      if (!userId || isNaN(userId)) {
+        throw new BadRequestException('User ID is invalid');
+      }
+
+      // Kiểm tra xem user có tồn tại không
+      const existingUser = await this.prismaService.user.findUnique({
+        where: { id: +userId },
+      });
+
+      if (!existingUser) {
+        throw new BadRequestException('User not found');
+      }
+      // Cập nhật thông tin người dùng
+      const user = await this.prismaService.user.update({
+        where: {
+          id: +userId,
+        },
+        data: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phoneNumber: data.phoneNumber,
+          roleId: data.roleId as Role,
+          address: data.address,
+          gender: data.gender as Gender,
+          dob: data.dateOfBirth ? new Date(data.dateOfBirth) : null,
+        },
+      });
+
+      const key = `avatar/${user.id}/${getKeyByFilename(image[0].originalname)}`;
+      const { url } = await this.uploadService.uploadFile(image[0], key);
+      // Xóa ảnh cũ nếu có
+      if (existingUser.image) {
+        await this.uploadService.deleteFileS3(existingUser.image[0]);
+      }
+
+      // Cập nhật URL ảnh mới trong cơ sở dữ liệu
+      await this.prismaService.user.update({
+        where: {
+          id: +userId,
+        },
+        data: {
+          image: url,
+        },
+      });
+
+      // Log thành công
+      this.logger.log(`Uploaded ${url}`);
+
+      return messageSuccess.USER_UPDATE;
+    } catch (error) {
+      // Log lỗi và throw ra ngoại lệ với thông báo chi tiết
+      this.logger.error(error?.message || 'Update user failed');
+      throw new BadRequestException({
+        success: false,
+        message: error?.message || 'Update user failed',
+        data: null,
+      });
+    }
   }
 }

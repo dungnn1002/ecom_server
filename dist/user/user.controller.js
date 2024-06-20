@@ -19,6 +19,7 @@ const user_services_1 = require("./user.services");
 const dto_1 = require("../share/dto");
 const dto_2 = require("./dto");
 const decorators_1 = require("../share/decorators");
+const platform_express_1 = require("@nestjs/platform-express");
 let UserController = class UserController {
     constructor(userServices) {
         this.userServices = userServices;
@@ -40,6 +41,9 @@ let UserController = class UserController {
     }
     async deleteUser(id) {
         return { data: await this.userServices.deleteUser(id) };
+    }
+    async editProfile(userId, data, image) {
+        return await this.userServices.editProfile(userId, data, image);
     }
 };
 exports.UserController = UserController;
@@ -93,6 +97,29 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUser", null);
+__decorate([
+    (0, common_1.UseGuards)(gauad_1.JwtGuard),
+    (0, common_1.Post)('/edit-profile'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('image')),
+    __param(0, (0, decorators_1.GetUser)()),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.UploadedFiles)(new common_1.ParseFilePipeBuilder()
+        .addFileTypeValidator({
+        fileType: 'image',
+    })
+        .build({
+        exceptionFactory: (errors) => {
+            throw new common_1.BadRequestException({
+                success: false,
+                message: errors,
+                data: null,
+            });
+        },
+    }))),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, dto_2.editUserDTO, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "editProfile", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_services_1.UserServices])

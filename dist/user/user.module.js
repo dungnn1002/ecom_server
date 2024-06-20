@@ -10,11 +10,13 @@ exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const user_controller_1 = require("./user.controller");
 const user_services_1 = require("./user.services");
+const upload_module_1 = require("../upload/upload.module");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
 exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
+        imports: [upload_module_1.UploadModule],
         controllers: [user_controller_1.UserController],
         providers: [user_services_1.UserServices],
         exports: [user_services_1.UserServices],

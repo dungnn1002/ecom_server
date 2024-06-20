@@ -33,10 +33,8 @@ export declare class AuthService {
             phoneNumber: string;
             image: string;
             dob: Date;
-            isActiveEmail: boolean;
             roleId: import(".prisma/client").$Enums.Role;
             status: import(".prisma/client").$Enums.Status;
-            userToken: string;
             createdAt: Date;
             updatedAt: Date;
         };

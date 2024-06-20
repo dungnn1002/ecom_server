@@ -14,28 +14,26 @@ datasource db {
 }
 
 model User {
-  id            Int           @id @default(autoincrement())
-  email         String        @unique
-  password      String
-  firstName     String
-  lastName      String
-  address       String?
-  gender        Gender?
-  phoneNumber   String?       @unique
-  image         String?
-  dob           DateTime?     @db.Timestamptz(3)
-  isActiveEmail Boolean?
-  roleId        Role          @default(USER)
-  status        Status?       @default(ACTIVE)
-  userToken     String?
-  createdAt     DateTime?     @default(now()) @db.Timestamptz(3)
-  updatedAt     DateTime?     @updatedAt @db.Timestamptz(3)
-  addressUser   AddressUser[]
-  blog          Blog[]
-  Comment       Comment[]
-  ShopCart      ShopCart[]
-  Receipt       Receipt[]
-  VoucherUsed   VoucherUsed[]
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  password    String
+  firstName   String
+  lastName    String
+  address     String?
+  gender      Gender?
+  phoneNumber String?       @unique
+  image       String?
+  dob         DateTime?     @db.Timestamptz(3)
+  roleId      Role          @default(USER)
+  status      Status?       @default(ACTIVE)
+  createdAt   DateTime?     @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime?     @updatedAt @db.Timestamptz(3)
+  addressUser AddressUser[]
+  blog        Blog[]
+  Comment     Comment[]
+  ShopCart    ShopCart[]
+  Receipt     Receipt[]
+  VoucherUsed VoucherUsed[]
 }
 
 model AddressUser {

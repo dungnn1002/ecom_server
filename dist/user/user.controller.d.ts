@@ -1,3 +1,4 @@
+/// <reference types="multer" />
 import { UserServices } from './user.services';
 import { PaginationDto, ResponseDto } from 'src/share/dto';
 import { addUserDTO, editUserDTO } from './dto';
@@ -54,5 +55,9 @@ export declare class UserController {
             message: string;
             code: string;
         };
+    }>;
+    editProfile(userId: number, data: editUserDTO, image: Express.Multer.File): Promise<{
+        message: string;
+        code: string;
     }>;
 }

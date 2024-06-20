@@ -7,6 +7,10 @@ import {
   Post,
   Body,
   Delete,
+  UseInterceptors,
+  UploadedFiles,
+  ParseFilePipeBuilder,
+  BadRequestException,
 } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/gauad';
 import { UserServices } from './user.services';
@@ -14,6 +18,7 @@ import { PaginationDto, ResponseDto } from 'src/share/dto';
 import { addUserDTO, editUserDTO } from './dto';
 import { User, AddressUser } from '@prisma/client';
 import { GetUser } from 'src/share/decorators';
+import { FilesInterceptor } from '@nestjs/platform-express';
 @Controller('users')
 export class UserController {
   constructor(private readonly userServices: UserServices) {}
@@ -54,5 +59,31 @@ export class UserController {
   @Delete('/delete-user/:id')
   async deleteUser(@Param('id') id: number) {
     return { data: await this.userServices.deleteUser(id) };
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('/edit-profile')
+  @UseInterceptors(FilesInterceptor('image'))
+  async editProfile(
+    @GetUser() userId: number,
+    @Body() data: editUserDTO,
+    @UploadedFiles(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: 'image',
+        })
+        .build({
+          exceptionFactory: (errors) => {
+            throw new BadRequestException({
+              success: false,
+              message: errors,
+              data: null,
+            });
+          },
+        }),
+    )
+    image: Express.Multer.File,
+  ) {
+    return await this.userServices.editProfile(userId, data, image);
   }
 }

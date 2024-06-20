@@ -26,10 +26,8 @@ export declare class AuthController {
             phoneNumber: string;
             image: string;
             dob: Date;
-            isActiveEmail: boolean;
             roleId: import(".prisma/client").$Enums.Role;
             status: import(".prisma/client").$Enums.Status;
-            userToken: string;
             createdAt: Date;
             updatedAt: Date;
         };
@@ -48,10 +46,8 @@ export declare class AuthController {
             phoneNumber: string;
             image: string;
             dob: Date;
-            isActiveEmail: boolean;
             roleId: import(".prisma/client").$Enums.Role;
             status: import(".prisma/client").$Enums.Status;
-            userToken: string;
             createdAt: Date;
             updatedAt: Date;
         };

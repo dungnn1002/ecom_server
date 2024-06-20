@@ -1,10 +1,14 @@
+/// <reference types="multer" />
 import { PrismaService } from '../prisma/prisma.service';
 import { AddressUser, User } from '@prisma/client';
 import { MessageDto, ResponseDto } from 'src/share/dto';
 import { addUserDTO, editUserDTO } from './dto';
+import { UploadService } from 'src/upload/upload.service';
 export declare class UserServices {
     private readonly prismaService;
-    constructor(prismaService: PrismaService);
+    private readonly uploadService;
+    private readonly logger;
+    constructor(prismaService: PrismaService, uploadService: UploadService);
     findById(userId: number): Promise<User | null>;
     getUserInfoById(userId: number): Promise<User | null>;
     getAll(page: number, limit: number, phoneNumber: string): Promise<ResponseDto<Omit<User, 'password'>[]>>;
@@ -55,4 +59,8 @@ export declare class UserServices {
         }[];
     }>;
     getShipAddress(userId: number): Promise<AddressUser[]>;
+    editProfile(userId: number, data: editUserDTO, image: Express.Multer.File): Promise<{
+        message: string;
+        code: string;
+    }>;
 }

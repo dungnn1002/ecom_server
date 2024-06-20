@@ -16,9 +16,13 @@ const common_2 = require("@nestjs/common");
 const exception_1 = require("../share/exception");
 const argon = require("argon2");
 const message_1 = require("../share/message");
+const upload_service_1 = require("../upload/upload.service");
+const get_key_by_filename_util_1 = require("../utils/get-key-by-filename.util");
 let UserServices = class UserServices {
-    constructor(prismaService) {
+    constructor(prismaService, uploadService) {
         this.prismaService = prismaService;
+        this.uploadService = uploadService;
+        this.logger = new common_1.Logger(upload_service_1.UploadService.name);
     }
     async findById(userId) {
         return this.prismaService.user.findUnique({
@@ -178,10 +182,61 @@ let UserServices = class UserServices {
             },
         });
     }
+    async editProfile(userId, data, image) {
+        try {
+            if (!userId || isNaN(userId)) {
+                throw new common_1.BadRequestException('User ID is invalid');
+            }
+            const existingUser = await this.prismaService.user.findUnique({
+                where: { id: +userId },
+            });
+            if (!existingUser) {
+                throw new common_1.BadRequestException('User not found');
+            }
+            const user = await this.prismaService.user.update({
+                where: {
+                    id: +userId,
+                },
+                data: {
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    phoneNumber: data.phoneNumber,
+                    roleId: data.roleId,
+                    address: data.address,
+                    gender: data.gender,
+                    dob: data.dateOfBirth ? new Date(data.dateOfBirth) : null,
+                },
+            });
+            const key = `avatar/${user.id}/${(0, get_key_by_filename_util_1.getKeyByFilename)(image[0].originalname)}`;
+            const { url } = await this.uploadService.uploadFile(image[0], key);
+            if (existingUser.image) {
+                await this.uploadService.deleteFileS3(existingUser.image[0]);
+            }
+            await this.prismaService.user.update({
+                where: {
+                    id: +userId,
+                },
+                data: {
+                    image: url,
+                },
+            });
+            this.logger.log(`Uploaded ${url}`);
+            return message_1.messageSuccess.USER_UPDATE;
+        }
+        catch (error) {
+            this.logger.error(error?.message || 'Update user failed');
+            throw new common_1.BadRequestException({
+                success: false,
+                message: error?.message || 'Update user failed',
+                data: null,
+            });
+        }
+    }
 };
 exports.UserServices = UserServices;
 exports.UserServices = UserServices = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        upload_service_1.UploadService])
 ], UserServices);
 //# sourceMappingURL=user.services.js.map
