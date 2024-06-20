@@ -17,7 +17,6 @@ import { editCategoryDTO } from './dto/editCategory.dto';
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
-  @UseGuards(JwtGuard)
   @Get('all')
   async getAll(
     @Query() { page, limit }: PaginationDto,
@@ -45,5 +44,4 @@ export class CategoryController {
   async editCategory(@Param('id') id: number, @Body() data: editCategoryDTO) {
     return { data: await this.categoryService.editCategory(id, data) };
   }
-  
 }

@@ -38,7 +38,6 @@ let CategoryController = class CategoryController {
 };
 exports.CategoryController = CategoryController;
 __decorate([
-    (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Get)('all'),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Query)('brandId')),

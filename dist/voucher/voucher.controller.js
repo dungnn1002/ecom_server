@@ -41,7 +41,6 @@ let voucherController = class voucherController {
 };
 exports.voucherController = voucherController;
 __decorate([
-    (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Get)('all-typeVoucher'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
@@ -57,7 +56,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], voucherController.prototype, "addTypeVoucher", null);
 __decorate([
-    (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Get)('all-voucher'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),

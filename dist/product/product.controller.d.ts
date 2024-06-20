@@ -11,12 +11,12 @@ export declare class ProductController {
     getAllProduct({ page, limit }: PaginationDto): Promise<{
         data: ({
             category: {
-                name: string;
                 id: number;
+                name: string;
             };
             brand: {
-                name: string;
                 id: number;
+                name: string;
             };
             ProductSize: {
                 id: number;

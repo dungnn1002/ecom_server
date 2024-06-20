@@ -15,7 +15,6 @@ import { addBrandDTO } from './dto/addBrand.dto';
 @Controller('brand')
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
-  @UseGuards(JwtGuard)
   @Get('all')
   async getAll(@Query() { page, limit }: PaginationDto) {
     return await this.brandService.findAll(+page, +limit);

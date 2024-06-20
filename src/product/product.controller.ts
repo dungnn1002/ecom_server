@@ -49,7 +49,6 @@ export class ProductController {
     return await this.productService.addProduct(data, images);
   }
 
-  @UseGuards(JwtGuard)
   @Get('all-product')
   async getAllProduct(@Query() { page, limit }: PaginationDto) {
     return await this.productService.findAllProduct(+page, +limit);

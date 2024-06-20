@@ -34,7 +34,6 @@ let BrandController = class BrandController {
 };
 exports.BrandController = BrandController;
 __decorate([
-    (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Get)('all'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),

@@ -8,7 +8,6 @@ import { addCodeVoucherDTO } from './dto/addCodeVoucher.dto';
 @Controller('voucher')
 export class voucherController {
   constructor(private readonly voucherService: voucherService) {}
-  @UseGuards(JwtGuard)
   @Get('all-typeVoucher')
   async getAll(@Query() { page, limit }: PaginationDto) {
     return await this.voucherService.findAll(+page, +limit);
@@ -21,7 +20,6 @@ export class voucherController {
     return await this.voucherService.addTypeVoucher(data);
   }
 
-  @UseGuards(JwtGuard)
   @Get('all-voucher')
   async getAllCodeVoucher(@Query() { page, limit }: PaginationDto) {
     return await this.voucherService.findAllCodeVoucher(+page, +limit);
