@@ -54,4 +54,10 @@ export const messageSuccess = {
     message: 'Cập nhật sản phẩm thành công',
     code: 'PRODUCT_0003',
   },
+
+  // comment
+  COMMENT_ADD_SUCCESS: {
+    message: 'Thêm bình luận thành công',
+    code: 'COMMENT_0001',
+  },
 };

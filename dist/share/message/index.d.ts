@@ -47,4 +47,8 @@ export declare const messageSuccess: {
         message: string;
         code: string;
     };
+    COMMENT_ADD_SUCCESS: {
+        message: string;
+        code: string;
+    };
 };

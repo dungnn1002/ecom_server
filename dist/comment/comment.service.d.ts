@@ -1,0 +1,42 @@
+/// <reference types="multer" />
+import { PrismaService } from 'src/prisma/prisma.service';
+import { addCommentDTO } from './dto/addComment.dto.';
+import { UploadService } from '../upload/upload.service';
+export declare class CommentService {
+    private readonly prismaService;
+    private readonly uploadService;
+    private readonly logger;
+    constructor(prismaService: PrismaService, uploadService: UploadService);
+    addComment(data: addCommentDTO, images: Express.Multer.File[]): Promise<{
+        message: string;
+        code: string;
+    }>;
+    getCommentByProduct(productId: number, page: number, limit: number): Promise<{
+        data: ({
+            user: {
+                id: number;
+                firstName: string;
+                lastName: string;
+                image: string;
+            };
+            CommentImage: {
+                id: number;
+                image_url: string;
+                commentId: number;
+                createdAt: Date;
+                updatedAt: Date;
+            }[];
+        } & {
+            id: number;
+            content: string;
+            productId: number;
+            userId: number;
+            star: number;
+            createdAt: Date;
+            updatedAt: Date;
+        })[];
+        pagination: {
+            totalPage: number;
+        };
+    }>;
+}

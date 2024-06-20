@@ -29,7 +29,6 @@ model User {
   createdAt   DateTime?     @default(now()) @db.Timestamptz(3)
   updatedAt   DateTime?     @updatedAt @db.Timestamptz(3)
   addressUser AddressUser[]
-  blog        Blog[]
   Comment     Comment[]
   ShopCart    ShopCart[]
   Receipt     Receipt[]
@@ -59,36 +58,26 @@ model Banner {
   updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
 }
 
-model Blog {
-  id              Int       @id @default(autoincrement())
-  title           String?
-  subject         Subject?
-  status          Status?
-  image           String?
-  contentMarkdown String?
-  contentHTML     String?
-  userId          Int?
-  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  view            Int?
-  createdAt       DateTime? @default(now()) @db.Timestamptz(3)
-  updatedAt       DateTime? @updatedAt @db.Timestamptz(3)
-  Comment         Comment[]
+model CommentImage {
+  id        Int       @id @default(autoincrement())
+  image_url String?
+  commentId Int?
+  comment   Comment?  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  createdAt DateTime? @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
 }
 
 model Comment {
-  id        Int       @id @default(autoincrement())
-  content   String?
-  image     String?
-  parentId  Int?
-  productId Int?
-  product   Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  userId    Int?
-  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blogId    Int?
-  blog      Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  star      Int?
-  createdAt DateTime? @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime? @updatedAt @db.Timestamptz(3)
+  id           Int            @id @default(autoincrement())
+  content      String?
+  productId    Int?
+  product      Product?       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId       Int?
+  user         User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  star         Int?
+  createdAt    DateTime?      @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime?      @updatedAt @db.Timestamptz(3)
+  CommentImage CommentImage[]
 }
 
 model OrderDetaill {
