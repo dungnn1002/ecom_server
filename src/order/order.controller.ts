@@ -1,21 +1,20 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/gauad';
 import { OrderService } from './order.service';
+import { PaginationDto } from 'src/share/dto';
+import { GetUser } from 'src/share/decorators';
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
-  // @UseGuards(JwtGuard)
-  // @Post('/add')
-  // async addOrder(@Body() data) {
-  //   return await this.orderService.addOrder(data);
-  // }
+  @UseGuards(JwtGuard)
+  @Get('all')
+  async getAll(@Query() { page, limit }: PaginationDto) {
+    return await this.orderService.getAll(+page, +limit);
+  }
+
+  @UseGuards(JwtGuard)
+  @Get(':id')
+  async getOrderById(@Param('id') id: number) {
+    return await this.orderService.getOrderById(id);
+  }
 }
