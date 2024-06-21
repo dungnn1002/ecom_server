@@ -55,4 +55,9 @@ export class CommentController {
       +limit,
     );
   }
+  @UseGuards(JwtGuard)
+  @Get('all')
+  async getAll(@Query() { page, limit }: PaginationDto) {
+    return await this.addressService.getAll(+page, +limit);
+  }
 }

@@ -87,4 +87,20 @@ export class CommentService {
       },
     };
   }
+  async getAll(page: number, limit: number) {
+    if (isNaN(page) || isNaN(limit))
+      throw new HttpException(httpErrors.QUERY_INVALID, HttpStatus.BAD_REQUEST);
+    const comment = await this.prismaService.comment.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    return {
+      data: comment,
+      pagination: {
+        totalPage: Math.ceil(
+          (await this.prismaService.product.count()) / limit,
+        ),
+      },
+    };
+  }
 }

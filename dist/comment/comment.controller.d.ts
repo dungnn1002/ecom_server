@@ -37,4 +37,18 @@ export declare class CommentController {
             totalPage: number;
         };
     }>;
+    getAll({ page, limit }: PaginationDto): Promise<{
+        data: {
+            id: number;
+            content: string;
+            productId: number;
+            userId: number;
+            star: number;
+            createdAt: Date;
+            updatedAt: Date;
+        }[];
+        pagination: {
+            totalPage: number;
+        };
+    }>;
 }

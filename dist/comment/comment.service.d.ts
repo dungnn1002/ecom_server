@@ -39,4 +39,18 @@ export declare class CommentService {
             totalPage: number;
         };
     }>;
+    getAll(page: number, limit: number): Promise<{
+        data: {
+            id: number;
+            content: string;
+            productId: number;
+            userId: number;
+            star: number;
+            createdAt: Date;
+            updatedAt: Date;
+        }[];
+        pagination: {
+            totalPage: number;
+        };
+    }>;
 }

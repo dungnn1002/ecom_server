@@ -29,6 +29,9 @@ let CommentController = class CommentController {
     async getCommentByProduct(productId, { page, limit }) {
         return await this.addressService.getCommentByProduct(+productId, +page, +limit);
     }
+    async getAll({ page, limit }) {
+        return await this.addressService.getAll(+page, +limit);
+    }
 };
 exports.CommentController = CommentController;
 __decorate([
@@ -62,6 +65,14 @@ __decorate([
     __metadata("design:paramtypes", [Number, dto_1.PaginationDto]),
     __metadata("design:returntype", Promise)
 ], CommentController.prototype, "getCommentByProduct", null);
+__decorate([
+    (0, common_1.UseGuards)(gauad_1.JwtGuard),
+    (0, common_1.Get)('all'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [dto_1.PaginationDto]),
+    __metadata("design:returntype", Promise)
+], CommentController.prototype, "getAll", null);
 exports.CommentController = CommentController = __decorate([
     (0, common_1.Controller)('comment'),
     __metadata("design:paramtypes", [comment_service_1.CommentService])
