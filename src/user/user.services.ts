@@ -316,4 +316,43 @@ export class UserServices {
       });
     }
   }
+  async getOrderByUser(userId: number) {
+    const addressId = await this.prismaService.addressUser.findMany({
+      where: {
+        userId: +userId,
+      },
+      select: {
+        id: true,
+      },
+    });
+    return await this.prismaService.orderProduct.findMany({
+      where: {
+        addressUserId: {
+          in: addressId.map((item) => item.id),
+        },
+      },
+      include: {
+        OrderDetaill: {
+          include: {
+            productSize: {
+              select: {
+                size: true,
+                product: {
+                  select: {
+                    name: true,
+                    discountPrice: true,
+                    ProductImage: {
+                      select: {
+                        image_url: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+  }
 }

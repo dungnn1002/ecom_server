@@ -67,4 +67,34 @@ export declare class UserServices {
         message: string;
         code: string;
     }>;
+    getOrderByUser(userId: number): Promise<({
+        OrderDetaill: ({
+            productSize: {
+                product: {
+                    name: string;
+                    discountPrice: number;
+                    ProductImage: {
+                        image_url: string;
+                    }[];
+                };
+                size: import(".prisma/client").$Enums.Size;
+            };
+        } & {
+            id: number;
+            orderId: number;
+            productSizeId: number;
+            quantity: number;
+            createdAt: Date;
+            updatedAt: Date;
+        })[];
+    } & {
+        id: number;
+        addressUserId: number;
+        isPaymentOnline: number;
+        totalPrice: number;
+        createdAt: Date;
+        updatedAt: Date;
+        typeShipId: number;
+        voucherId: number;
+    })[]>;
 }

@@ -48,6 +48,9 @@ let UserController = class UserController {
     async addOrder(data) {
         return await this.userServices.addOrder(data);
     }
+    async getOrderByUser(userId) {
+        return await this.userServices.getOrderByUser(userId);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -131,6 +134,14 @@ __decorate([
     __metadata("design:paramtypes", [dto_2.addOrderDTO]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "addOrder", null);
+__decorate([
+    (0, common_1.UseGuards)(gauad_1.JwtGuard),
+    (0, common_1.Get)('/order-by-user'),
+    __param(0, (0, decorators_1.GetUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getOrderByUser", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_services_1.UserServices])

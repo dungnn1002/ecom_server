@@ -92,4 +92,10 @@ export class UserController {
   async addOrder(@Body() data: addOrderDTO) {
     return await this.userServices.addOrder(data);
   }
+
+  @UseGuards(JwtGuard)
+  @Get('/order-by-user')
+  async getOrderByUser(@GetUser() userId: number) {
+    return await this.userServices.getOrderByUser(userId);
+  }
 }
