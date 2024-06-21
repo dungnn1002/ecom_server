@@ -87,26 +87,23 @@ model OrderDetaill {
   productSizeId Int?
   productSize   ProductSize?  @relation(fields: [productSizeId], references: [id], onDelete: Cascade)
   quantity      Int?
-  realPrice     Int?
   createdAt     DateTime?     @default(now()) @db.Timestamptz(3)
   updatedAt     DateTime?     @updatedAt @db.Timestamptz(3)
-  Product       Product?      @relation(fields: [productId], references: [id])
-  productId     Int?
 }
 
 model OrderProduct {
   id              Int            @id @default(autoincrement())
   addressUserId   Int?
   addressUser     AddressUser?   @relation(fields: [addressUserId], references: [id], onDelete: Cascade)
-  typeShipId      Int?
-  typeShip        TypeShip?      @relation(fields: [typeShipId], references: [id], onDelete: Cascade)
-  isPaymentOnline Boolean?
-  voucherId       Int?
-  voucher         Voucher?       @relation(fields: [voucherId], references: [id], onDelete: Cascade)
-  image           String?
+  isPaymentOnline Int?
+  totalPrice      Int?
   createdAt       DateTime?      @default(now()) @db.Timestamptz(3)
   updatedAt       DateTime?      @updatedAt @db.Timestamptz(3)
   OrderDetaill    OrderDetaill[]
+  TypeShip        TypeShip?      @relation(fields: [typeShipId], references: [id])
+  typeShipId      Int?
+  Voucher         Voucher?       @relation(fields: [voucherId], references: [id])
+  voucherId       Int?
 }
 
 model ProductSize {
@@ -145,7 +142,6 @@ model Product {
   discountPrice   Int?
   brand           Brand?         @relation(fields: [brandId], references: [id])
   Comment         Comment[]
-  OrderDetaill    OrderDetaill[]
   ProductSize     ProductSize[]
   ProductImage    ProductImage[]
 }

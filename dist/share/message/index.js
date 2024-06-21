@@ -54,5 +54,9 @@ exports.messageSuccess = {
         message: 'Thêm bình luận thành công',
         code: 'COMMENT_0001',
     },
+    ORDER_ADD_SUCCESS: {
+        message: 'Thêm đơn hàng thành công',
+        code: 'ORDER_0001',
+    },
 };
 //# sourceMappingURL=index.js.map

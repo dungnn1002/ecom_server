@@ -15,7 +15,7 @@ import {
 import { JwtGuard } from 'src/auth/gauad';
 import { UserServices } from './user.services';
 import { PaginationDto, ResponseDto } from 'src/share/dto';
-import { addUserDTO, editUserDTO, editProfileDTO } from './dto';
+import { addUserDTO, editUserDTO, editProfileDTO, addOrderDTO } from './dto';
 import { User, AddressUser } from '@prisma/client';
 import { GetUser } from 'src/share/decorators';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -85,5 +85,11 @@ export class UserController {
     image: Express.Multer.File,
   ) {
     return await this.userServices.editProfile(userId, data, image);
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('/add-order')
+  async addOrder(@Body() data: addOrderDTO) {
+    return await this.userServices.addOrder(data);
   }
 }

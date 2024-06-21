@@ -4,7 +4,7 @@ import { AddressUser, Gender, Role, User } from '@prisma/client';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { httpErrors } from '../share/exception';
 import { MessageDto, ResponseDto } from 'src/share/dto';
-import { addUserDTO, editProfileDTO, editUserDTO } from './dto';
+import { addOrderDTO, addUserDTO, editProfileDTO, editUserDTO } from './dto';
 import * as argon from 'argon2';
 import { messageSuccess } from 'src/share/message';
 import { UploadService } from 'src/upload/upload.service';
@@ -244,6 +244,68 @@ export class UserServices {
       this.logger.log(`Uploaded ${url}`);
 
       return messageSuccess.USER_UPDATE;
+    } catch (error) {
+      // Log lỗi và throw ra ngoại lệ với thông báo chi tiết
+      this.logger.error(error?.message || 'Update user failed');
+      throw new BadRequestException({
+        success: false,
+        message: error?.message || 'Update user failed',
+        data: null,
+      });
+    }
+  }
+  async addOrder(data: addOrderDTO) {
+    try {
+      const product = await this.prismaService.orderProduct.create({
+        data: {
+          addressUserId: +data.addressUserId,
+          isPaymentOnline: +data.isPaymentOnline,
+          typeShipId: +data.typeShipId,
+          voucherId: +data.voucherId,
+          totalPrice: +data.totalPrice,
+        },
+      });
+      for (const item of data.shopCart) {
+        await this.prismaService.orderDetaill.create({
+          data: {
+            orderId: +product.id,
+            productSizeId: +item.productSizeId,
+            quantity: +item.quantity,
+          },
+        });
+      }
+      const userId = await this.prismaService.addressUser.findUnique({
+        where: {
+          id: +data.addressUserId,
+        },
+        select: {
+          userId: true,
+        },
+      });
+      await this.prismaService.shopCart.deleteMany({
+        where: {
+          userId: +userId.userId,
+        },
+      });
+      for (const item of data.shopCart) {
+        await this.prismaService.productSize.update({
+          where: {
+            id: +item.productSizeId,
+          },
+          data: {
+            quantity: {
+              decrement: +item.quantity,
+            },
+          },
+        });
+      }
+      await this.prismaService.voucherUsed.create({
+        data: {
+          userId: +userId.userId,
+          voucherId: +data.voucherId,
+        },
+      });
+      return messageSuccess.ORDER_ADD_SUCCESS;
     } catch (error) {
       // Log lỗi và throw ra ngoại lệ với thông báo chi tiết
       this.logger.error(error?.message || 'Update user failed');

@@ -2,7 +2,7 @@
 import { PrismaService } from '../prisma/prisma.service';
 import { AddressUser, User } from '@prisma/client';
 import { MessageDto, ResponseDto } from 'src/share/dto';
-import { addUserDTO, editProfileDTO, editUserDTO } from './dto';
+import { addOrderDTO, addUserDTO, editProfileDTO, editUserDTO } from './dto';
 import { UploadService } from 'src/upload/upload.service';
 export declare class UserServices {
     private readonly prismaService;
@@ -22,8 +22,8 @@ export declare class UserServices {
             code: string;
         };
         user: {
-            email: string;
             id: number;
+            email: string;
             createdAt: Date;
         };
     }>;
@@ -60,6 +60,10 @@ export declare class UserServices {
     }>;
     getShipAddress(userId: number): Promise<AddressUser[]>;
     editProfile(userId: number, data: editProfileDTO, image: Express.Multer.File): Promise<{
+        message: string;
+        code: string;
+    }>;
+    addOrder(data: addOrderDTO): Promise<{
         message: string;
         code: string;
     }>;

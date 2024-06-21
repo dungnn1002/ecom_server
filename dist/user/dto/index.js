@@ -17,4 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./addUser.dto"), exports);
 __exportStar(require("./editUser.dto"), exports);
 __exportStar(require("./editProfile.dto"), exports);
+__exportStar(require("./addOrder.dto"), exports);
 //# sourceMappingURL=index.js.map

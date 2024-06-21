@@ -51,4 +51,8 @@ export declare const messageSuccess: {
         message: string;
         code: string;
     };
+    ORDER_ADD_SUCCESS: {
+        message: string;
+        code: string;
+    };
 };

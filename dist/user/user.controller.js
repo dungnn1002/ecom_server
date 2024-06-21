@@ -45,6 +45,9 @@ let UserController = class UserController {
     async editProfile(userId, data, image) {
         return await this.userServices.editProfile(userId, data, image);
     }
+    async addOrder(data) {
+        return await this.userServices.addOrder(data);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -120,6 +123,14 @@ __decorate([
     __metadata("design:paramtypes", [Number, dto_2.editProfileDTO, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "editProfile", null);
+__decorate([
+    (0, common_1.UseGuards)(gauad_1.JwtGuard),
+    (0, common_1.Post)('/add-order'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [dto_2.addOrderDTO]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "addOrder", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_services_1.UserServices])

@@ -60,4 +60,10 @@ export const messageSuccess = {
     message: 'Thêm bình luận thành công',
     code: 'COMMENT_0001',
   },
+
+  //order
+  ORDER_ADD_SUCCESS: {
+    message: 'Thêm đơn hàng thành công',
+    code: 'ORDER_0001',
+  },
 };
