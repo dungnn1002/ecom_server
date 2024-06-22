@@ -29,6 +29,9 @@ let ProductController = class ProductController {
     async getAllProduct({ page, limit }) {
         return await this.productService.findAllProduct(+page, +limit);
     }
+    async getAllProductByFilter({ page, limit, brandId, categoryId, name, sort, order }) {
+        return await this.productService.findAllProductByFilter(+page, +limit, +brandId, +categoryId, name, sort, order);
+    }
     async getUserById(id) {
         return { data: await this.productService.getProductById(+id) };
     }
@@ -73,6 +76,13 @@ __decorate([
     __metadata("design:paramtypes", [dto_2.PaginationDto]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getAllProduct", null);
+__decorate([
+    (0, common_1.Get)('all-product-filter'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getAllProductByFilter", null);
 __decorate([
     (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Get)(':id'),

@@ -79,6 +79,62 @@ export class ProductService {
       });
     }
   }
+  // lấy tất cả sản phẩm theo brand, category, name hoặc sắp xếp theo giá, theo tên
+  async findAllProductByFilter(
+    page: number,
+    limit: number,
+    brandId: number,
+    categoryId: number,
+    name: string,
+    sort: 'discountPrice' | 'name',
+    order: 'asc' | 'desc',
+  ) {
+    if (isNaN(page) || isNaN(limit))
+      throw new HttpException(httpErrors.QUERY_INVALID, HttpStatus.BAD_REQUEST);
+    const products = await this.prismaService.product.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+      where: {
+        brandId: brandId ? +brandId : undefined,
+        categoryId: categoryId ? +categoryId : undefined,
+        name: name ? { contains: name } : undefined,
+      },
+      orderBy: {
+        [sort]: order,
+      },
+      include: {
+        brand: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        ProductImage: true,
+        ProductSize: true,
+      },
+    });
+    return {
+      data: products,
+      pagination: {
+        totalPage: Math.ceil(
+          (await this.prismaService.product.count({
+            where: {
+              brandId: brandId ? +brandId : undefined,
+              categoryId: categoryId ? +categoryId : undefined,
+              name: name ? { contains: name } : undefined,
+            },
+          })) / limit,
+        ),
+      },
+    };
+  }
+
   async findAllProduct(page: number, limit: number) {
     if (isNaN(page) || isNaN(limit))
       throw new HttpException(httpErrors.QUERY_INVALID, HttpStatus.BAD_REQUEST);

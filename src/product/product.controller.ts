@@ -54,6 +54,21 @@ export class ProductController {
     return await this.productService.findAllProduct(+page, +limit);
   }
 
+  @Get('all-product-filter')
+  async getAllProductByFilter(
+    @Query() { page, limit, brandId, categoryId, name, sort, order }: any,
+  ) {
+    return await this.productService.findAllProductByFilter(
+      +page,
+      +limit,
+      +brandId,
+      +categoryId,
+      name,
+      sort,
+      order,
+    );
+  }
+
   @UseGuards(JwtGuard)
   @Get(':id')
   async getUserById(@Param('id') id: number) {

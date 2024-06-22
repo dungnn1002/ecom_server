@@ -76,6 +76,50 @@ let ProductService = class ProductService {
             });
         }
     }
+    async findAllProductByFilter(page, limit, brandId, categoryId, name, sort, order) {
+        if (isNaN(page) || isNaN(limit))
+            throw new common_1.HttpException(exception_1.httpErrors.QUERY_INVALID, common_1.HttpStatus.BAD_REQUEST);
+        const products = await this.prismaService.product.findMany({
+            skip: (page - 1) * limit,
+            take: limit,
+            where: {
+                brandId: brandId ? +brandId : undefined,
+                categoryId: categoryId ? +categoryId : undefined,
+                name: name ? { contains: name } : undefined,
+            },
+            orderBy: {
+                [sort]: order,
+            },
+            include: {
+                brand: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+                ProductImage: true,
+                ProductSize: true,
+            },
+        });
+        return {
+            data: products,
+            pagination: {
+                totalPage: Math.ceil((await this.prismaService.product.count({
+                    where: {
+                        brandId: brandId ? +brandId : undefined,
+                        categoryId: categoryId ? +categoryId : undefined,
+                        name: name ? { contains: name } : undefined,
+                    },
+                })) / limit),
+            },
+        };
+    }
     async findAllProduct(page, limit) {
         if (isNaN(page) || isNaN(limit))
             throw new common_1.HttpException(exception_1.httpErrors.QUERY_INVALID, common_1.HttpStatus.BAD_REQUEST);

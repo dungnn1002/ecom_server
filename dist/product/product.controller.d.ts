@@ -50,6 +50,48 @@ export declare class ProductController {
             totalPage: number;
         };
     }>;
+    getAllProductByFilter({ page, limit, brandId, categoryId, name, sort, order }: any): Promise<{
+        data: ({
+            category: {
+                id: number;
+                name: string;
+            };
+            brand: {
+                id: number;
+                name: string;
+            };
+            ProductSize: {
+                id: number;
+                productId: number;
+                size: import(".prisma/client").$Enums.Size;
+                quantity: number;
+                createdAt: Date;
+                updatedAt: Date;
+            }[];
+            ProductImage: {
+                id: number;
+                productId: number;
+                image_url: string;
+                createdAt: Date;
+                updatedAt: Date;
+            }[];
+        } & {
+            id: number;
+            name: string;
+            contentHTML: string;
+            contentMarkdown: string;
+            status: import(".prisma/client").$Enums.Status;
+            categoryId: number;
+            view: number;
+            material: string;
+            brandId: number;
+            originalPrice: number;
+            discountPrice: number;
+        })[];
+        pagination: {
+            totalPage: number;
+        };
+    }>;
     getUserById(id: number): Promise<{
         data: {
             category: {
