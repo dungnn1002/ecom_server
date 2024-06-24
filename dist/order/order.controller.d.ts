@@ -44,7 +44,6 @@ export declare class OrderController {
         };
         OrderDetaill: ({
             productSize: {
-                size: import(".prisma/client").$Enums.Size;
                 product: {
                     name: string;
                     discountPrice: number;
@@ -52,6 +51,7 @@ export declare class OrderController {
                         image_url: string;
                     }[];
                 };
+                size: import(".prisma/client").$Enums.Size;
             };
         } & {
             id: number;

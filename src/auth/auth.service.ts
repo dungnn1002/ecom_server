@@ -11,9 +11,7 @@ import { LoginDTO, RegisterDTO } from './dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { messageSuccess } from 'src/share/message';
-import { httpErrors } from 'src/share/exception';
 import { UserServices } from 'src/user/user.services';
-import { JwtGuard } from './gauad/myjwt.guard';
 @Injectable({})
 export class AuthService {
   constructor(
@@ -89,5 +87,4 @@ export class AuthService {
     const user = await this.userServices.getUserInfoById(userId);
     return user;
   }
-  
 }

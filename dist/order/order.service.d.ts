@@ -43,7 +43,6 @@ export declare class OrderService {
         };
         OrderDetaill: ({
             productSize: {
-                size: import(".prisma/client").$Enums.Size;
                 product: {
                     name: string;
                     discountPrice: number;
@@ -51,6 +50,7 @@ export declare class OrderService {
                         image_url: string;
                     }[];
                 };
+                size: import(".prisma/client").$Enums.Size;
             };
         } & {
             id: number;
