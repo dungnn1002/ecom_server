@@ -14,9 +14,9 @@ export declare class CommentService {
     getCommentByProduct(productId: number, page: number, limit: number): Promise<{
         data: ({
             user: {
+                id: number;
                 firstName: string;
                 lastName: string;
-                id: number;
                 image: string;
             };
             CommentImage: {

@@ -12,9 +12,9 @@ export declare class CommentController {
     getCommentByProduct(productId: number, { page, limit }: PaginationDto): Promise<{
         data: ({
             user: {
+                id: number;
                 firstName: string;
                 lastName: string;
-                id: number;
                 image: string;
             };
             CommentImage: {
