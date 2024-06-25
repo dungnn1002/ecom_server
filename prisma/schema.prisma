@@ -47,15 +47,6 @@ model AddressUser {
   OrderProduct OrderProduct[]
 }
 
-model Banner {
-  id          Int       @id @default(autoincrement())
-  description String?
-  name        String?
-  image       String?
-  createdAt   DateTime? @default(now()) @db.Timestamptz(3)
-  updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
-}
-
 model CommentImage {
   id        Int       @id @default(autoincrement())
   image_url String?
