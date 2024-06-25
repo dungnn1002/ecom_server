@@ -2,7 +2,6 @@ import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/gauad';
 import { OrderService } from './order.service';
 import { PaginationDto } from 'src/share/dto';
-import { GetUser } from 'src/share/decorators';
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}

@@ -32,10 +32,10 @@ let ProductController = class ProductController {
     async getAllProductByFilter({ page, limit, brandId, categoryId, name, sort, order }) {
         return await this.productService.findAllProductByFilter(+page, +limit, +brandId, +categoryId, name, sort, order);
     }
-    async getUserById(id) {
+    async getProductById(id) {
         return { data: await this.productService.getProductById(+id) };
     }
-    async editCategory(id, data, images) {
+    async editProduct(id, data, images) {
         return { data: await this.productService.editProduct(id, data, images) };
     }
     async deleteCategory(id) {
@@ -90,7 +90,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], ProductController.prototype, "getUserById", null);
+], ProductController.prototype, "getProductById", null);
 __decorate([
     (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Post)('edit-product/:id'),
@@ -117,7 +117,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, dto_1.editProductDTO, Array]),
     __metadata("design:returntype", Promise)
-], ProductController.prototype, "editCategory", null);
+], ProductController.prototype, "editProduct", null);
 __decorate([
     (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Delete)('/delete-product/:id'),

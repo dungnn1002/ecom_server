@@ -92,7 +92,7 @@ export declare class ProductController {
             totalPage: number;
         };
     }>;
-    getUserById(id: number): Promise<{
+    getProductById(id: number): Promise<{
         data: {
             category: {
                 name: string;
@@ -129,7 +129,7 @@ export declare class ProductController {
             discountPrice: number;
         };
     }>;
-    editCategory(id: number, data: editProductDTO, images: Express.Multer.File[]): Promise<{
+    editProduct(id: number, data: editProductDTO, images: Express.Multer.File[]): Promise<{
         data: {
             message: string;
             code: string;

@@ -71,14 +71,14 @@ export class ProductController {
 
   @UseGuards(JwtGuard)
   @Get(':id')
-  async getUserById(@Param('id') id: number) {
+  async getProductById(@Param('id') id: number) {
     return { data: await this.productService.getProductById(+id) };
   }
 
   @UseGuards(JwtGuard)
   @Post('edit-product/:id')
   @UseInterceptors(FilesInterceptor('images'))
-  async editCategory(
+  async editProduct(
     @Param('id') id: number,
     @Body() data: editProductDTO,
     @UploadedFiles(

@@ -2,8 +2,6 @@ import { addShopCartDTO } from './dto/addShopCart.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { httpErrors } from 'src/share/exception';
-import { MessageDto } from 'src/share/dto';
-import { messageSuccess } from 'src/share/message';
 import { ShopCart } from 'prisma/prisma-client';
 @Injectable()
 export class ShopCartService {
