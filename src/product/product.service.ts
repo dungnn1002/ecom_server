@@ -86,7 +86,7 @@ export class ProductService {
     brandId: number,
     categoryId: number,
     name: string,
-    sort: 'discountPrice' | 'name',
+    sort: 'discountPrice' | 'name' | 'createdAt',
     order: 'asc' | 'desc',
   ) {
     if (isNaN(page) || isNaN(limit))

@@ -11,7 +11,7 @@ export declare class ProductService {
     addProduct(data: addProductDTO, images: Express.Multer.File[]): Promise<{
         message: MessageDto;
     }>;
-    findAllProductByFilter(page: number, limit: number, brandId: number, categoryId: number, name: string, sort: 'discountPrice' | 'name', order: 'asc' | 'desc'): Promise<{
+    findAllProductByFilter(page: number, limit: number, brandId: number, categoryId: number, name: string, sort: 'discountPrice' | 'name' | 'createdAt', order: 'asc' | 'desc'): Promise<{
         data: ({
             category: {
                 id: number;
@@ -43,11 +43,12 @@ export declare class ProductService {
             contentMarkdown: string;
             status: import(".prisma/client").$Enums.Status;
             categoryId: number;
-            view: number;
             material: string;
             brandId: number;
             originalPrice: number;
             discountPrice: number;
+            createdAt: Date;
+            updatedAt: Date;
         })[];
         pagination: {
             totalPage: number;
@@ -85,11 +86,12 @@ export declare class ProductService {
             contentMarkdown: string;
             status: import(".prisma/client").$Enums.Status;
             categoryId: number;
-            view: number;
             material: string;
             brandId: number;
             originalPrice: number;
             discountPrice: number;
+            createdAt: Date;
+            updatedAt: Date;
         })[];
         pagination: {
             totalPage: number;
@@ -124,11 +126,12 @@ export declare class ProductService {
         contentMarkdown: string;
         status: import(".prisma/client").$Enums.Status;
         categoryId: number;
-        view: number;
         material: string;
         brandId: number;
         originalPrice: number;
         discountPrice: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     getProductById(id: number): Promise<{
         category: {
@@ -159,11 +162,12 @@ export declare class ProductService {
         contentMarkdown: string;
         status: import(".prisma/client").$Enums.Status;
         categoryId: number;
-        view: number;
         material: string;
         brandId: number;
         originalPrice: number;
         discountPrice: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     editProduct(id: number, data: editProductDTO, images: Express.Multer.File[]): Promise<{
         message: string;

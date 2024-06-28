@@ -40,11 +40,12 @@ export declare class ProductController {
             contentMarkdown: string;
             status: import(".prisma/client").$Enums.Status;
             categoryId: number;
-            view: number;
             material: string;
             brandId: number;
             originalPrice: number;
             discountPrice: number;
+            createdAt: Date;
+            updatedAt: Date;
         })[];
         pagination: {
             totalPage: number;
@@ -82,11 +83,12 @@ export declare class ProductController {
             contentMarkdown: string;
             status: import(".prisma/client").$Enums.Status;
             categoryId: number;
-            view: number;
             material: string;
             brandId: number;
             originalPrice: number;
             discountPrice: number;
+            createdAt: Date;
+            updatedAt: Date;
         })[];
         pagination: {
             totalPage: number;
@@ -122,11 +124,12 @@ export declare class ProductController {
             contentMarkdown: string;
             status: import(".prisma/client").$Enums.Status;
             categoryId: number;
-            view: number;
             material: string;
             brandId: number;
             originalPrice: number;
             discountPrice: number;
+            createdAt: Date;
+            updatedAt: Date;
         };
     }>;
     editProduct(id: number, data: editProductDTO, images: Express.Multer.File[]): Promise<{

@@ -3,6 +3,33 @@ export declare class OrderService {
     private readonly prismaService;
     constructor(prismaService: PrismaService);
     getAll(page: number, limit: number): Promise<({
+        addressUser: {
+            user: {
+                id: number;
+                email: string;
+                password: string;
+                firstName: string;
+                lastName: string;
+                address: string;
+                gender: import(".prisma/client").$Enums.Gender;
+                phoneNumber: string;
+                image: string;
+                dob: Date;
+                roleId: import(".prisma/client").$Enums.Role;
+                status: import(".prisma/client").$Enums.Status;
+                createdAt: Date;
+                updatedAt: Date;
+            };
+        } & {
+            id: number;
+            userId: number;
+            shipName: string;
+            shipAddress: string;
+            shipPhone: string;
+            shipEmail: string;
+            createdAt: Date;
+            updatedAt: Date;
+        };
         TypeShip: {
             id: number;
             name: string;
@@ -43,6 +70,7 @@ export declare class OrderService {
         };
         OrderDetaill: ({
             productSize: {
+                size: import(".prisma/client").$Enums.Size;
                 product: {
                     name: string;
                     discountPrice: number;
@@ -50,7 +78,6 @@ export declare class OrderService {
                         image_url: string;
                     }[];
                 };
-                size: import(".prisma/client").$Enums.Size;
             };
         } & {
             id: number;

@@ -23,6 +23,11 @@ let OrderService = class OrderService {
             include: {
                 TypeShip: true,
                 Voucher: true,
+                addressUser: {
+                    include: {
+                        user: true,
+                    },
+                },
             },
         });
         return listorder;

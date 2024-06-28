@@ -124,7 +124,6 @@ model Product {
   status          Status?
   categoryId      Int?
   category        Category?      @relation(fields: [categoryId], references: [id])
-  view            Int?
   material        String?
   brandId         Int?
   originalPrice   Int?
@@ -133,6 +132,8 @@ model Product {
   Comment         Comment[]
   ProductSize     ProductSize[]
   ProductImage    ProductImage[]
+  createdAt       DateTime?      @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime?      @updatedAt @db.Timestamptz(3)
 }
 
 model ShopCart {
