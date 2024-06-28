@@ -69,6 +69,11 @@ export class ProductController {
     );
   }
 
+  @Get('top-product')
+  async getTopProduct() {
+    return await this.productService.getTopProduct();
+  }
+
   @UseGuards(JwtGuard)
   @Get(':id')
   async getProductById(@Param('id') id: number) {
@@ -109,10 +114,5 @@ export class ProductController {
   @Delete('/delete-product/:id')
   async deleteCategory(@Param('id') id: number) {
     return { data: await this.productService.deleteProduct(id) };
-  }
-
-  @Get('/top-product')
-  async getTopProduct() {
-    return await this.productService.getTopProduct();
   }
 }

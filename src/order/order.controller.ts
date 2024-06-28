@@ -16,5 +16,4 @@ export class OrderController {
   async getOrderById(@Param('id') id: number) {
     return await this.orderService.getOrderById(id);
   }
-
 }

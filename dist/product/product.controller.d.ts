@@ -94,6 +94,37 @@ export declare class ProductController {
             totalPage: number;
         };
     }>;
+    getTopProduct(): Promise<({
+        product: {
+            ProductImage: {
+                id: number;
+                productId: number;
+                image_url: string;
+                createdAt: Date;
+                updatedAt: Date;
+            }[];
+        } & {
+            id: number;
+            name: string;
+            contentHTML: string;
+            contentMarkdown: string;
+            status: import(".prisma/client").$Enums.Status;
+            categoryId: number;
+            material: string;
+            brandId: number;
+            originalPrice: number;
+            discountPrice: number;
+            createdAt: Date;
+            updatedAt: Date;
+        };
+    } & {
+        id: number;
+        productId: number;
+        size: import(".prisma/client").$Enums.Size;
+        quantity: number;
+        createdAt: Date;
+        updatedAt: Date;
+    })[]>;
     getProductById(id: number): Promise<{
         data: {
             category: {
@@ -144,9 +175,4 @@ export declare class ProductController {
             code: string;
         };
     }>;
-    getTopProduct(): Promise<(import(".prisma/client").Prisma.PickEnumerable<import(".prisma/client").Prisma.OrderDetaillGroupByOutputType, "productSizeId"[]> & {
-        _count: {
-            productSizeId: number;
-        };
-    })[]>;
 }

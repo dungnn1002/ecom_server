@@ -32,6 +32,9 @@ let ProductController = class ProductController {
     async getAllProductByFilter({ page, limit, brandId, categoryId, name, sort, order }) {
         return await this.productService.findAllProductByFilter(+page, +limit, +brandId, +categoryId, name, sort, order);
     }
+    async getTopProduct() {
+        return await this.productService.getTopProduct();
+    }
     async getProductById(id) {
         return { data: await this.productService.getProductById(+id) };
     }
@@ -40,9 +43,6 @@ let ProductController = class ProductController {
     }
     async deleteCategory(id) {
         return { data: await this.productService.deleteProduct(id) };
-    }
-    async getTopProduct() {
-        return await this.productService.getTopProduct();
     }
 };
 exports.ProductController = ProductController;
@@ -87,6 +87,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getAllProductByFilter", null);
 __decorate([
+    (0, common_1.Get)('top-product'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getTopProduct", null);
+__decorate([
     (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -129,12 +135,6 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "deleteCategory", null);
-__decorate([
-    (0, common_1.Get)('/top-product'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], ProductController.prototype, "getTopProduct", null);
 exports.ProductController = ProductController = __decorate([
     (0, common_1.Controller)('product'),
     __metadata("design:paramtypes", [product_service_1.ProductService])

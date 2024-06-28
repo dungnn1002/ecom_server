@@ -167,10 +167,10 @@ export class ProductService {
       },
     };
   }
-  async findById(id: number) {
-    return await this.prismaService.product.findUnique({
+  async findById(productId: number) {
+    return this.prismaService.product.findUnique({
       where: {
-        id: id,
+        id: productId,
       },
       include: {
         brand: {
@@ -273,7 +273,7 @@ export class ProductService {
     });
     return messageSuccess.PRODUCT_DELETE_SUCCESS;
   }
-  // lấy tất cả sản phẩm và count số lượng sản phẩm theo productSizeId trong bang orderdetail, sau đó lấy giới hạn 10 sản phẩm và sắp xếp giảm dần
+  // lấy tất cả sản phẩm và count số lượng sản phẩm theo productSizeId trong bang orderdetail, sau đó lấy giới hạn 10 sản phẩm và sắp xếp giảm dần, lấy ra top 10 sản phẩm bán chạy nhất có cả ảnh, tên, giá thông qua productsizeID
   async getTopProduct() {
     const listProduct = await this.prismaService.orderDetaill.groupBy({
       by: ['productSizeId'],
@@ -287,6 +287,23 @@ export class ProductService {
       },
       take: 10,
     });
-    return listProduct;
+    const topProduct = await Promise.all(
+      listProduct.map(async (product) => {
+        const productSize = await this.prismaService.productSize.findUnique({
+          where: {
+            id: product.productSizeId,
+          },
+          include: {
+            product: {
+              include: {
+                ProductImage: true,
+              },
+            },
+          },
+        });
+        return productSize;
+      }),
+    );
+    return topProduct;
   }
 }

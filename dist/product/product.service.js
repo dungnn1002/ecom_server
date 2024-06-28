@@ -150,10 +150,10 @@ let ProductService = class ProductService {
             },
         };
     }
-    async findById(id) {
-        return await this.prismaService.product.findUnique({
+    async findById(productId) {
+        return this.prismaService.product.findUnique({
             where: {
-                id: id,
+                id: productId,
             },
             include: {
                 brand: {
@@ -255,7 +255,22 @@ let ProductService = class ProductService {
             },
             take: 10,
         });
-        return listProduct;
+        const topProduct = await Promise.all(listProduct.map(async (product) => {
+            const productSize = await this.prismaService.productSize.findUnique({
+                where: {
+                    id: product.productSizeId,
+                },
+                include: {
+                    product: {
+                        include: {
+                            ProductImage: true,
+                        },
+                    },
+                },
+            });
+            return productSize;
+        }));
+        return topProduct;
     }
 };
 exports.ProductService = ProductService;
