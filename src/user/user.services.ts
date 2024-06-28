@@ -299,6 +299,16 @@ export class UserServices {
           },
         });
       }
+      await this.prismaService.voucher.update({
+        where: {
+          id: +data.voucherId,
+        },
+        data: {
+          amount: {
+            decrement: 1,
+          },
+        },
+      });
       await this.prismaService.voucherUsed.create({
         data: {
           userId: +userId.userId,

@@ -22,8 +22,8 @@ export declare class UserServices {
             code: string;
         };
         user: {
-            id: number;
             email: string;
+            id: number;
             createdAt: Date;
         };
     }>;

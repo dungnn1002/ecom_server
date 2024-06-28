@@ -153,7 +153,7 @@ let ProductService = class ProductService {
     async findById(id) {
         return await this.prismaService.product.findUnique({
             where: {
-                id: +id,
+                id: id,
             },
             include: {
                 brand: {
@@ -241,6 +241,21 @@ let ProductService = class ProductService {
             },
         });
         return message_1.messageSuccess.PRODUCT_DELETE_SUCCESS;
+    }
+    async getTopProduct() {
+        const listProduct = await this.prismaService.orderDetaill.groupBy({
+            by: ['productSizeId'],
+            _count: {
+                productSizeId: true,
+            },
+            orderBy: {
+                _count: {
+                    productSizeId: 'desc',
+                },
+            },
+            take: 10,
+        });
+        return listProduct;
     }
 };
 exports.ProductService = ProductService;

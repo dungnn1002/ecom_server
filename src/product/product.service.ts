@@ -170,7 +170,7 @@ export class ProductService {
   async findById(id: number) {
     return await this.prismaService.product.findUnique({
       where: {
-        id: +id,
+        id: id,
       },
       include: {
         brand: {
@@ -272,5 +272,21 @@ export class ProductService {
       },
     });
     return messageSuccess.PRODUCT_DELETE_SUCCESS;
+  }
+  // lấy tất cả sản phẩm và count số lượng sản phẩm theo productSizeId trong bang orderdetail, sau đó lấy giới hạn 10 sản phẩm và sắp xếp giảm dần
+  async getTopProduct() {
+    const listProduct = await this.prismaService.orderDetaill.groupBy({
+      by: ['productSizeId'],
+      _count: {
+        productSizeId: true,
+      },
+      orderBy: {
+        _count: {
+          productSizeId: 'desc',
+        },
+      },
+      take: 10,
+    });
+    return listProduct;
   }
 }

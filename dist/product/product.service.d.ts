@@ -177,4 +177,9 @@ export declare class ProductService {
         message: string;
         code: string;
     }>;
+    getTopProduct(): Promise<(import(".prisma/client").Prisma.PickEnumerable<import(".prisma/client").Prisma.OrderDetaillGroupByOutputType, "productSizeId"[]> & {
+        _count: {
+            productSizeId: number;
+        };
+    })[]>;
 }

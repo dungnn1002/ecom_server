@@ -110,4 +110,9 @@ export class ProductController {
   async deleteCategory(@Param('id') id: number) {
     return { data: await this.productService.deleteProduct(id) };
   }
+
+  @Get('/top-product')
+  async getTopProduct() {
+    return await this.productService.getTopProduct();
+  }
 }
