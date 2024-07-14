@@ -51,6 +51,9 @@ let UserController = class UserController {
     async getOrderByUser(userId) {
         return await this.userServices.getOrderByUser(userId);
     }
+    async getVoucherUsedByUserId(userId) {
+        return await this.userServices.getVoucherUsedByUserId(userId);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -142,6 +145,14 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getOrderByUser", null);
+__decorate([
+    (0, common_1.UseGuards)(gauad_1.JwtGuard),
+    (0, common_1.Get)('VoucherUsedByUserId'),
+    __param(0, (0, decorators_1.GetUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getVoucherUsedByUserId", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_services_1.UserServices])

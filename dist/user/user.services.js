@@ -342,6 +342,13 @@ let UserServices = class UserServices {
             },
         });
     }
+    async getVoucherUsedByUserId(userId) {
+        return await this.prismaService.voucherUsed.findMany({
+            where: {
+                userId: +userId,
+            },
+        });
+    }
 };
 exports.UserServices = UserServices;
 exports.UserServices = UserServices = __decorate([

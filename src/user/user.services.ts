@@ -365,4 +365,11 @@ export class UserServices {
       },
     });
   }
+  async getVoucherUsedByUserId(userId: number) {
+    return await this.prismaService.voucherUsed.findMany({
+      where: {
+        userId: +userId,
+      },
+    });
+  }
 }

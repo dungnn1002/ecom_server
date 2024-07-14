@@ -98,4 +98,10 @@ export class UserController {
   async getOrderByUser(@GetUser() userId: number) {
     return await this.userServices.getOrderByUser(userId);
   }
+
+  @UseGuards(JwtGuard)
+  @Get('VoucherUsedByUserId')
+  async getVoucherUsedByUserId(@GetUser() userId: number) {
+    return await this.userServices.getVoucherUsedByUserId(userId);
+  }
 }

@@ -14,8 +14,8 @@ export declare class UserController {
                 code: string;
             };
             user: {
-                email: string;
                 id: number;
+                email: string;
                 createdAt: Date;
             };
         };
@@ -94,4 +94,11 @@ export declare class UserController {
         typeShipId: number;
         voucherId: number;
     })[]>;
+    getVoucherUsedByUserId(userId: number): Promise<{
+        id: number;
+        userId: number;
+        voucherId: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
 }
