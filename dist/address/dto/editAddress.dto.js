@@ -37,5 +37,20 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], editAddressDTO.prototype, "shipAddress", void 0);
+], editAddressDTO.prototype, "province", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], editAddressDTO.prototype, "district", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], editAddressDTO.prototype, "ward", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], editAddressDTO.prototype, "address", void 0);
 //# sourceMappingURL=editAddress.dto.js.map

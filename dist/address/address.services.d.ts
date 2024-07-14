@@ -7,7 +7,10 @@ export declare class AddressService {
         id: number;
         userId: number;
         shipName: string;
-        shipAddress: string;
+        province: string;
+        district: string;
+        ward: string;
+        address: string;
         shipPhone: string;
         shipEmail: string;
         createdAt: Date;
@@ -17,7 +20,10 @@ export declare class AddressService {
         id: number;
         userId: number;
         shipName: string;
-        shipAddress: string;
+        province: string;
+        district: string;
+        ward: string;
+        address: string;
         shipPhone: string;
         shipEmail: string;
         createdAt: Date;
@@ -27,7 +33,10 @@ export declare class AddressService {
         id: number;
         userId: number;
         shipName: string;
-        shipAddress: string;
+        province: string;
+        district: string;
+        ward: string;
+        address: string;
         shipPhone: string;
         shipEmail: string;
         createdAt: Date;

@@ -8,7 +8,10 @@ export class AddressService {
     return await this.prismaService.addressUser.create({
       data: {
         userId: +data.userId,
-        shipAddress: data.shipAddress,
+        province: data.province,
+        district: data.district,
+        ward: data.ward,
+        address: data.address,
         shipEmail: data.shipEmail,
         shipName: data.shipName,
         shipPhone: data.shipPhone,
@@ -28,7 +31,10 @@ export class AddressService {
         id: +data.id,
       },
       data: {
-        shipAddress: data.shipAddress,
+        province: data.province,
+        district: data.district,
+        ward: data.ward,
+        address: data.address,
         shipEmail: data.shipEmail,
         shipName: data.shipName,
         shipPhone: data.shipPhone,

@@ -3,5 +3,8 @@ export declare class editAddressDTO {
     shipName: string;
     shipEmail: string;
     shipPhone: string;
-    shipAddress: string;
+    province: string;
+    district: string;
+    ward: string;
+    address: string;
 }

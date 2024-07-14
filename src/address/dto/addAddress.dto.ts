@@ -18,5 +18,17 @@ export class addAddressDTO {
 
   @IsString()
   @IsNotEmpty()
-  shipAddress: string;
+  province: string;
+
+  @IsString()
+  @IsNotEmpty()
+  district: string;
+
+  @IsString()
+  @IsNotEmpty()
+  ward: string;
+
+  @IsString()
+  @IsNotEmpty()
+  address: string;
 }

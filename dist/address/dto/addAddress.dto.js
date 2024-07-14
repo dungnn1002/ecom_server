@@ -37,5 +37,20 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], addAddressDTO.prototype, "shipAddress", void 0);
+], addAddressDTO.prototype, "province", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], addAddressDTO.prototype, "district", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], addAddressDTO.prototype, "ward", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], addAddressDTO.prototype, "address", void 0);
 //# sourceMappingURL=addAddress.dto.js.map
