@@ -3,6 +3,29 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class OrderService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async getAllOrderByIdUser(userId: number) {
+    const addressId = await this.prismaService.addressUser.findMany({
+      where: {
+        userId: +userId,
+      },
+      select: {
+        id: true,
+      },
+    });
+    // tính tổng của các totalPrice và trả về tổng đó
+    return await this.prismaService.orderProduct.findMany({
+      where: {
+        addressUserId: {
+          in: addressId.map((item) => item.id),
+        },
+      },
+      select: {
+        totalPrice: true,
+      },
+    });
+  }
+
   async getAll(page: number, limit: number) {
     const listorder = await this.prismaService.orderProduct.findMany({
       skip: (page - 1) * limit,

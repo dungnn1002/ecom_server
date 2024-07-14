@@ -24,6 +24,9 @@ let OrderController = class OrderController {
     async getAll({ page, limit }) {
         return await this.orderService.getAll(+page, +limit);
     }
+    async getAllOrderByIdUser(userId) {
+        return await this.orderService.getAllOrderByIdUser(userId);
+    }
     async getOrderById(id) {
         return await this.orderService.getOrderById(id);
     }
@@ -37,6 +40,14 @@ __decorate([
     __metadata("design:paramtypes", [dto_1.PaginationDto]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "getAll", null);
+__decorate([
+    (0, common_1.UseGuards)(gauad_1.JwtGuard),
+    (0, common_1.Get)('totalPrice'),
+    __param(0, (0, common_1.Query)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "getAllOrderByIdUser", null);
 __decorate([
     (0, common_1.UseGuards)(gauad_1.JwtGuard),
     (0, common_1.Get)(':id'),

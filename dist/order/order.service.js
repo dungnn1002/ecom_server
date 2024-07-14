@@ -16,6 +16,26 @@ let OrderService = class OrderService {
     constructor(prismaService) {
         this.prismaService = prismaService;
     }
+    async getAllOrderByIdUser(userId) {
+        const addressId = await this.prismaService.addressUser.findMany({
+            where: {
+                userId: +userId,
+            },
+            select: {
+                id: true,
+            },
+        });
+        return await this.prismaService.orderProduct.findMany({
+            where: {
+                addressUserId: {
+                    in: addressId.map((item) => item.id),
+                },
+            },
+            select: {
+                totalPrice: true,
+            },
+        });
+    }
     async getAll(page, limit) {
         const listorder = await this.prismaService.orderProduct.findMany({
             skip: (page - 1) * limit,

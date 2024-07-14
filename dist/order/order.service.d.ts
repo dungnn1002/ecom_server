@@ -2,6 +2,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export declare class OrderService {
     private readonly prismaService;
     constructor(prismaService: PrismaService);
+    getAllOrderByIdUser(userId: number): Promise<{
+        totalPrice: number;
+    }[]>;
     getAll(page: number, limit: number): Promise<({
         addressUser: {
             user: {
@@ -76,6 +79,7 @@ export declare class OrderService {
         };
         OrderDetaill: ({
             productSize: {
+                size: import(".prisma/client").$Enums.Size;
                 product: {
                     name: string;
                     discountPrice: number;
@@ -83,7 +87,6 @@ export declare class OrderService {
                         image_url: string;
                     }[];
                 };
-                size: import(".prisma/client").$Enums.Size;
             };
         } & {
             id: number;

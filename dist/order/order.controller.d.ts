@@ -61,6 +61,9 @@ export declare class OrderController {
         typeShipId: number;
         voucherId: number;
     })[]>;
+    getAllOrderByIdUser(userId: number): Promise<{
+        totalPrice: number;
+    }[]>;
     getOrderById(id: number): Promise<{
         addressUser: {
             id: number;
@@ -77,6 +80,7 @@ export declare class OrderController {
         };
         OrderDetaill: ({
             productSize: {
+                size: import(".prisma/client").$Enums.Size;
                 product: {
                     name: string;
                     discountPrice: number;
@@ -84,7 +88,6 @@ export declare class OrderController {
                         image_url: string;
                     }[];
                 };
-                size: import(".prisma/client").$Enums.Size;
             };
         } & {
             id: number;

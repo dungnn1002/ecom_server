@@ -12,6 +12,12 @@ export class OrderController {
   }
 
   @UseGuards(JwtGuard)
+  @Get('totalPrice')
+  async getAllOrderByIdUser(@Query('userId') userId: number) {
+    return await this.orderService.getAllOrderByIdUser(userId);
+  }
+
+  @UseGuards(JwtGuard)
   @Get(':id')
   async getOrderById(@Param('id') id: number) {
     return await this.orderService.getOrderById(id);
